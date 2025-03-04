@@ -1,3 +1,14 @@
+sl-input[type="number"] {
+  appearance: textfield; /* Standard */
+  -moz-appearance: textfield; /* Firefox */
+}
+
+sl-input[type="number"]::-webkit-inner-spin-button,
+sl-input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none; /* Chrome, Safari, Edge, Opera */
+  margin: 0;
+}
+
 .content {
   display: flex;
   flex-direction: row;
@@ -30,17 +41,21 @@
   padding-right: 10px;
 }
 
-.scheduleDetails hr {
-  margin: 5px 0px;
-}
-
-.scheduleTable {
+.customerTable {
+  margin-top: 10px;
+  width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: center;
+}
+
+.customerTable1 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   align-items: flex-start;
   border: solid var(--sl-input-border-width) var(--sl-input-border-color);
-  width: 65%;
+  width: 85%;
   padding: 10px;
   border-radius: 10px;
   height: 550px;
@@ -48,22 +63,22 @@
 }
 
 /* Custom scrollbar */
-.scheduleTable::-webkit-scrollbar {
+.customerTable1::-webkit-scrollbar {
   width: 10px;
 }
 
-.scheduleTable::-webkit-scrollbar-track {
-  background: #1A1A1E;
+.customerTable1::-webkit-scrollbar-track {
+  background: #1a1a1e;
   border-radius: 10px;
 }
 
-.scheduleTable::-webkit-scrollbar-thumb {
+.customerTable1::-webkit-scrollbar-thumb {
   background: #0ea5e9;
   border-radius: 10px;
   transition: background 0.3s ease-in-out;
 }
 
-.scheduleTable table {
+.customerTable1 table {
   width: 100%;
   border-collapse: collapse;
   border: none;
@@ -71,7 +86,7 @@
   border-radius: 5px;
 }
 
-.scheduleTable th {
+.customerTable1 th {
   color: #0ea5e9;
   background: #1a1a1e;
   font-weight: 400;
@@ -81,48 +96,23 @@
   border-bottom: 1px solid #36363b;
 }
 
-.scheduleTable tr:nth-child(even) td {
+.customerTable1 tr:nth-child(even) td {
   background-color: #1a1a1e;
   color: var(--sl-input-label-color);
   border: 0px;
   border-bottom: 1px solid #36363b;
 }
 
-.scheduleTable tr:nth-child(odd) td {
+.customerTable1 tr:nth-child(odd) td {
   background-color: var(--background-color);
   color: var(--sl-input-label-color);
   border: 0px;
   border-bottom: 1px solid #36363b;
 }
 
-.scheduleTable td {
+.customerTable1 td {
   padding: 10px 4px;
   transition: 0.3s ease-in-out;
   font-size: 12px;
   justify-content: center;
-  cursor: pointer;
-}
-
-.detailsHeader {
-  font-size: 18px;
-  font-weight: 700;
-  color: #27BAFD;
-  margin: 0px;
-  padding-bottom: 5px;
-}
-
-.detailsTitle {
-  font-size: 14px;
-  font-weight: 500;
-  color:  #E8E8EC;
-  margin: 0px;
-  padding: 5px 0px;
-}
-
-.detialsContent {
-  font-size: 18px;
-  font-weight: 600;
-  color:  #82A8BE;
-  margin: 0px;
-  padding: 0px;
 }
