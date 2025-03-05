@@ -1,42 +1,42 @@
 sl-input[type="number"] {
-    appearance: textfield; /* Standard */
-    -moz-appearance: textfield; /* Firefox */
-  }
-  
-  sl-input[type="number"]::-webkit-inner-spin-button,
-  sl-input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none; /* Chrome, Safari, Edge, Opera */
-    margin: 0;
-  }
-  
-  .content {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-  }
-  
-  .topNavbar::part(base) {
-    width: 100%;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 20px;
-  }
-  
-  .topNavigationBar {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: center;
-    width: 86.5%;
-  }
-  
-  .column {
-    padding-right: 10px;
-  }
+  appearance: textfield; /* Standard */
+  -moz-appearance: textfield; /* Firefox */
+}
+
+sl-input[type="number"]::-webkit-inner-spin-button,
+sl-input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none; /* Chrome, Safari, Edge, Opera */
+  margin: 0;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.topNavbar::part(base) {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 20px;
+}
+
+.topNavigationBar {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 87.3%;
+}
+
+.column {
+  padding-right: 10px;
+}
