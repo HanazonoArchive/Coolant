@@ -51,7 +51,7 @@ include PROJECT_ROOT . "/Controller/scheduleController.php";
                         <sl-option value="DESC">Descending</sl-option>
                     </sl-select>
                     <div class="column">
-                        <sl-button id="filterApplyButton" variant="primary" size="small">Submit</sl-button>
+                        <sl-button id="filterApplyButton" variant="primary" size="small">Apply</sl-button>
                     </div>
                 </div>
             </div>

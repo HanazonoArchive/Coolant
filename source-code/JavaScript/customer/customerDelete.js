@@ -1,4 +1,4 @@
-class DeleteAppointmentForm {
+class DeleteCustomerForm {
   constructor(submitButtonId) {
     this.submitButton = document.getElementById(submitButtonId);
 
@@ -11,28 +11,30 @@ class DeleteAppointmentForm {
   }
 
   getFormData() {
-    let formData = {
-      appointment_ID: this.getValue("appointmentDelete_AppointmentID"),
-      action: "delete",
-    };
+    let customerID = document.getElementById("DeleteCustomer_ID")?.value;
+    let confirmationTEXT = document.getElementById("DeleteCustomer_Confirmation")?.value;
 
-    // Check for empty fields
-    if (Object.values(formData).some((value) => !value.trim())) {
+    if (confirmationTEXT !== "DELETE") {
       this.submitButton.removeAttribute("loading");
       this.submitButton.setAttribute("variant", "warning");
       return null;
     }
 
-    return formData;
-  }
+    if (!customerID) {
+      this.submitButton.removeAttribute("loading");
+      this.submitButton.setAttribute("variant", "warning");
+      return null;
+    }
 
-  getValue(id) {
-    return document.getElementById(id)?.value.trim() || "";
+    return {
+      customer_ID: customerID,
+      action: "customerDelete",
+    };
   }
 
   async sendFormData(formData) {
     try {
-      const response = await fetch("appointment.php", {
+      const response = await fetch("customer.php", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams(formData).toString(),
@@ -40,15 +42,14 @@ class DeleteAppointmentForm {
 
       const data = await response.text();
 
-      this.submitButton.removeAttribute("loading");
-      this.submitButton.setAttribute("variant", "success");
-      this.clearFields()
-      
       if (data.includes("success")) {
-        setTimeout(() => location.reload(), 2000);
-        return;
+        this.clearInputFields();
+        this.submitButton.removeAttribute("loading");
+        this.submitButton.setAttribute("variant", "success");
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
       }
-      
     } catch (error) {
       console.error("Error fetching data:", error);
       this.submitButton.removeAttribute("loading");
@@ -56,43 +57,30 @@ class DeleteAppointmentForm {
     }
   }
 
-  clearFields() {
-    document.getElementById("appointmentDelete_AppointmentID").value = "";
-    document.getElementById("appointmentDelete_Confirmation").value = "";
-  }
-
   handleSubmit() {
     console.log("Submit button clicked.");
     this.submitButton.setAttribute("loading", true);
 
-    const confirmation = document.getElementById(
-      "appointmentDelete_Confirmation"
-    );
-
-    if (confirmation.value === "DELETE") {
-      const formData = this.getFormData();
-      if (formData) this.sendFormData(formData);
-    } else {
-      this.submitButton.removeAttribute("loading");
-      this.submitButton.setAttribute("variant", "warning");
-    }
+    const formData = this.getFormData();
+    if (formData) this.sendFormData(formData);
+  }
+  
+  clearInputFields() {
+    document.getElementById("DeleteCustomer_ID").value = "";
+    document.getElementById("DeleteCustomer_Confirmation").value = "";
   }
 }
 
 // Initialize when the page loads
 document.addEventListener("DOMContentLoaded", () => {
-  new DeleteAppointmentForm("submitDeleteAppointment");
-  console.log("Appointment Delete JS Loaded!");
+  new DeleteCustomerForm("submitCustomerDelete");
+  console.log("Customer Delete JS Loaded!");
 
-  fetch(
-    "/Coolant/source-code/Controller/quotationController.php?fetch_appointments=true"
-  )
+  fetch("/Coolant/source-code/Controller/customerController_Feedback.php?fetch_Customer=true")
     .then((response) => response.json())
     .then((data) => {
-      const dropdown = document.getElementById(
-        "appointmentDelete_AppointmentID"
-      );
-      dropdown.innerHTML = "<sl-option value=''>Select Appointment</sl-option>";
+      const dropdown = document.getElementById("DeleteCustomer_ID");
+      dropdown.innerHTML = "<sl-option value=''>Select Customer</sl-option>";
 
       data.forEach((appointment) => {
         const option = document.createElement("sl-option");

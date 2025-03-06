@@ -62,12 +62,12 @@ include PROJECT_ROOT . "/Controller/appointmentController.php";
                                 <sl-option value="Urgent">Urgent</sl-option>
                             </sl-select>
                             <sl-divider></sl-divider>
-                            <sl-button id="submitCreateAppointment" variant="primary">Submit</sl-button>
+                            <sl-button id="submitCreateAppointment" variant="primary" outline>Submit</sl-button>
 
                             <sl-button id="createAppointment_Close" slot="footer" variant="primary">Close</sl-button>
                         </sl-dialog>
 
-                        <sl-button id="createAppointment_Open">Create Appointment</sl-button>
+                        <sl-button id="createAppointment_Open" variant="success" outline>Create Appointment</sl-button>
                     </div>
                     <div class="column">
                         <sl-dialog id="updateAppointment_Dialog" label="Update Appointment" class="dialog-deny-close">
@@ -90,12 +90,12 @@ include PROJECT_ROOT . "/Controller/appointmentController.php";
                             <br>
                             <sl-input id="appointmentUpdate_Date" config-id="date" label="Date" help-text="Update the Appointment Date" size="small"></sl-input>
                             <sl-divider></sl-divider>
-                            <sl-button id="submitUpdateAppointment" variant="primary">Submit</sl-button>
+                            <sl-button id="submitUpdateAppointment" variant="primary" outline>Submit</sl-button>
 
                             <sl-button id="updateAppointment_Close" slot="footer" variant="primary">Close</sl-button>
                         </sl-dialog>
 
-                        <sl-button id="updateAppointment_Open">Update Appointment</sl-button>
+                        <sl-button id="updateAppointment_Open" variant="warning" outline>Update Appointment</sl-button>
                     </div>
                     <div class="column">
                         <sl-dialog id="deleteAppointment_Dialog" label="Delete Appointment" class="dialog-deny-close">
@@ -105,12 +105,12 @@ include PROJECT_ROOT . "/Controller/appointmentController.php";
                             <br>
                             <sl-input id="appointmentDelete_Confirmation" label="Date" help-text='Type "DELETE" to confirm Deletion' size="small"></sl-input>
                             <sl-divider></sl-divider>
-                            <sl-button id="submitDeleteAppointment" variant="primary">Submit</sl-button>
+                            <sl-button id="submitDeleteAppointment" variant="primary" outline>Submit</sl-button>
 
                             <sl-button id="deleteAppointment_Close" slot="footer" variant="primary">Close</sl-button>
                         </sl-dialog>
 
-                        <sl-button id="deleteAppointment_Open">Delete Appointment</sl-button>
+                        <sl-button id="deleteAppointment_Open" variant="danger" outline>Delete Appointment</sl-button>
                     </div>
                 </div>
             </div>

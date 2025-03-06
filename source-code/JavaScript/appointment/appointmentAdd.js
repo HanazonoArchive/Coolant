@@ -45,15 +45,16 @@ class CreateAppointmentForm {
       });
 
       const data = await response.text();
+      
+      this.submitButton.removeAttribute("loading");
+      this.submitButton.setAttribute("variant", "success");
+      this.clearFields();
 
       if (data.includes("success")) {
         setTimeout(() => location.reload(), 2000);
         return;
       }
 
-      this.submitButton.removeAttribute("loading");
-      this.submitButton.setAttribute("variant", "success");
-      this.clearFields();
     } catch (error) {
       console.error("Error fetching data:", error);
       this.submitButton.removeAttribute("loading");
@@ -63,8 +64,7 @@ class CreateAppointmentForm {
 
   clearFields() {
     document.getElementById("appointmentCreateCustomer_Name").value = "";
-    document.getElementById("appointmentCreateCustomer_ContactNumber").value =
-      "";
+    document.getElementById("appointmentCreateCustomer_ContactNumber").value = "";
     document.getElementById("appointmentCreateCustomer_Address").value = "";
     document.getElementById("appointmentCreate_Date").value = "";
     document.getElementById("appointmentCreate_Category").value = "";
