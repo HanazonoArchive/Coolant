@@ -22,6 +22,9 @@ include PROJECT_ROOT . "/Controller/customerController.php";
     <script src="<?= BASE_URL_STYLE ?>/JavaScript/customer/customerFilter.js"></script>
     <script src="<?= BASE_URL_STYLE ?>/JavaScript/customer/customerUpdate.js"></script>
     <script src="<?= BASE_URL_STYLE ?>/JavaScript/customer/customerDelete.js"></script>
+    <script src="<?= BASE_URL_STYLE ?>/JavaScript/customer/feedbackCreate.js"></script>
+    <script src="<?= BASE_URL_STYLE ?>/JavaScript/customer/feedbackUpdate.js"></script>
+    <script src="<?= BASE_URL_STYLE ?>/JavaScript/customer/feedbackDelete.js"></script>
     <div class="content">
         <div class="topNavigationBar">
             <div class="topNavigationBar1" style="width: 100%; display: flex; align-items: center;">

@@ -228,7 +228,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $conn->commit();
             header('Content-Type: application/json');
-            echo json_encode(["status" => "success", "message" => "feedback created successfully", "feedback_ID" => $employee_id, "reload" => true]);
+            echo json_encode(["status" => "success", "message" => "feedback created successfully"]);
         } catch (Exception $e) {
             $conn->rollBack();
             error_log("Transaction failed: " . $e->getMessage());
@@ -263,7 +263,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $conn->commit();
             header('Content-Type: application/json');
-            echo json_encode(["status" => "success", "message" => "feedback created successfully", "feedback_ID" => $employee_id, "reload" => true]);
+            echo json_encode(["status" => "success", "message" => "feedback created successfully"]);
         } catch (Exception $e) {
             $conn->rollBack();
             error_log("Transaction failed: " . $e->getMessage());

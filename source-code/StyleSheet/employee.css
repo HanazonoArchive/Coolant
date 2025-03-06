@@ -1,0 +1,115 @@
+sl-input[type="number"] {
+    appearance: textfield; /* Standard */
+    -moz-appearance: textfield; /* Firefox */
+  }
+  
+  sl-input[type="number"]::-webkit-inner-spin-button,
+  sl-input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none; /* Chrome, Safari, Edge, Opera */
+    margin: 0;
+  }
+  
+  .content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .topNavbar::part(base) {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 20px;
+  }
+  
+  .topNavigationBar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    width: 86.5%;
+  }
+
+.column {
+    padding-right: 10px;
+}
+
+.column1 {
+    padding: 0px;
+}
+
+.employeeTable {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  border: solid var(--sl-input-border-width) var(--sl-input-border-color);
+  width: 85%;
+  padding: 10px;
+  border-radius: 10px;
+  overflow: auto;
+  margin-top: 10px;
+  height: 500px;
+}
+
+/* Custom scrollbar */
+.employeeTable::-webkit-scrollbar {
+  width: 10px;
+}
+
+.employeeTable::-webkit-scrollbar-track {
+  background: #1a1a1e;
+  border-radius: 10px;
+}
+
+.employeeTable::-webkit-scrollbar-thumb {
+  background: #0ea5e9;
+  border-radius: 10px;
+  transition: background 0.3s ease-in-out;
+}
+
+.employeeTable table {
+  width: 100%;
+  border-collapse: collapse;
+  border: none;
+  height: auto;
+  border-radius: 5px;
+}
+
+.employeeTable th {
+  color: #0ea5e9;
+  background: #1a1a1e;
+  font-weight: 400;
+  font-size: 12px;
+  padding: 4px 2px;
+  border: 0px;
+  border-bottom: 1px solid #36363b;
+}
+
+.employeeTable tr:nth-child(even) td {
+  background-color: #1a1a1e;
+  color: var(--sl-input-label-color);
+  border: 0px;
+  border-bottom: 1px solid #36363b;
+}
+
+.employeeTable tr:nth-child(odd) td {
+  background-color: var(--background-color);
+  color: var(--sl-input-label-color);
+  border: 0px;
+  border-bottom: 1px solid #36363b;
+}
+
+.employeeTable td {
+  padding: 10px 4px;
+  transition: 0.3s ease-in-out;
+  font-size: 12px;
+  justify-content: center;
+}

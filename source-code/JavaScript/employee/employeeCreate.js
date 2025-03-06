@@ -1,4 +1,4 @@
-class UpdateFeedbackForm {
+class CreateEmployeeForm {
     constructor(submitButtonId) {
         this.submitButton = document.getElementById(submitButtonId);
 
@@ -12,9 +12,13 @@ class UpdateFeedbackForm {
 
     getFormData() {
         let formData = {
-            feedback_ID: this.getValue("UpdateFeedback_ID"),
-            feedback_comment: this.getValue("UpdateFeedback_NewComment"),
-            action: "feedbackUpdate"
+            employee_name: this.getValue("employeeAdd_Name"),
+            employee_contactNumber: this.getValue("employeeAdd_ContactNumber"),
+            employee_role: this.getValue("employeeAdd_Role"),
+            employee_status: "Present",
+            employee_pay: this.getValue("employeeAdd_Pay"),
+            employee_workDays: "0",
+            action: "create"
         };
 
         if (Object.entries(formData).some(([key, value]) => typeof value === "string" && !value.trim())) {
@@ -31,23 +35,21 @@ class UpdateFeedbackForm {
     }
 
     clearInputField() {
-        document.getElementById("UpdateFeedback_ID").value = "";
-        document.getElementById("UpdateFeedback_NewComment").value = "";
+        document.getElementById("employeeAdd_Name").value = "";
+        document.getElementById("employeeAdd_ContactNumber").value = "";
+        document.getElementById("employeeAdd_Role").value = "";
+        document.getElementById("employeeAdd_Pay").value = "";
     }
 
     async sendFormData(formData) {
         try {
-            console.log("Sending Data to Server:", new URLSearchParams(formData).toString());
-
-            const response = await fetch("customer.php", {
+            const response = await fetch("employee.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: new URLSearchParams(formData).toString(),
             });
 
             const data = await response.text();
-            console.log("Server Response:", data);
-
             if (data.includes("success")) {
                 this.submitButton.removeAttribute("loading");
                 this.submitButton.setAttribute("variant", "success");
@@ -63,6 +65,7 @@ class UpdateFeedbackForm {
             this.submitButton.setAttribute("variant", "danger");
         }
     }
+
     handleSubmit() {
         console.log("Submit button clicked.");
         this.submitButton.setAttribute("loading", true);
@@ -72,23 +75,7 @@ class UpdateFeedbackForm {
     }
 }
 
-// Initialize when the page loads
 document.addEventListener("DOMContentLoaded", () => {
-    new UpdateFeedbackForm("submitFeedbackUpdate");
-    console.log("Feedback Update JS Loaded!");
-
-    fetch("/Coolant/source-code/Controller/customerController_Feedback.php?fetch_Feedback=true")
-        .then((response) => response.json())
-        .then((data) => {
-          const dropdown = document.getElementById("UpdateFeedback_ID");
-          dropdown.innerHTML = "<sl-option value=''>Select Feedback ID</sl-option>";
-    
-          data.forEach((appointment) => {
-            const option = document.createElement("sl-option");
-            option.value = appointment.id;
-            option.textContent = `${appointment.id} - ${appointment.name}`;
-            dropdown.appendChild(option);
-          });
-        })
-        .catch((error) => console.error("Error fetching appointments:", error));
+    new CreateEmployeeForm("submitEmployeeAdd");
+    console.log("Employee Create JS Loaded!");
 });
