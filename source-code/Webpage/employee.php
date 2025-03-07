@@ -108,8 +108,8 @@ include PROJECT_ROOT . "/Controller/employeeController_Employee.php";
                             <sl-select id="UpdateEmploye_NewStatus" label="Employee Status"
                                 help-text="Update Employee status." size="small">
                                 <sl-option value="Present">Present</sl-option>
-                                <sl-option value="Present">Absent</sl-option>
-                                <sl-option value="Present">On-Leave</sl-option>
+                                <sl-option value="Absent">Absent</sl-option>
+                                <sl-option value="On-Leave">On-Leave</sl-option>
                             </sl-select>
 
                             <sl-divider></sl-divider>

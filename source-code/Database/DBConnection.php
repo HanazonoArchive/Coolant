@@ -3,13 +3,13 @@ class Database {
     private static $instance = null;
     private $conn;
 
-    private $host = "HoyoWorld.serv.gs";
-    //private $host = "localhost";
+    //private $host = "HoyoWorld.serv.gs";
+    private $host = "localhost";
     private $port = "3306"; // Change this if your MySQL server runs on a different port
     private $dbname = "Coolant"; // Change this to your database name
     private $username = "root"; // Change this if needed
-    private $password = "aaa12345"; // Change this if needed
-    //private $password = "";
+    //private $password = "aaa12345"; // Change this if needed
+    private $password = "";
 
     private function __construct() {
         try {
