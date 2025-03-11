@@ -2,7 +2,7 @@
 define('PROJECT_ROOT', $_SERVER['DOCUMENT_ROOT'] . '/Coolant/source-code');
 define('BASE_URL_STYLE', '/Coolant/source-code');
 
-include PROJECT_ROOT . "/Controller/employeeLogController.php";
+include PROJECT_ROOT . "/Controller/quotationController.php";
 ?>
 
 <!DOCTYPE html>
@@ -12,13 +12,15 @@ include PROJECT_ROOT . "/Controller/employeeLogController.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?= BASE_URL_STYLE ?>/StyleSheet/quotation.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <title>Quotation</title>
 </head>
 
 <body>
-    <script src="<?= BASE_URL_STYLE ?>/JavaScript/quotation/quotationTableFunctions.js"></script>
     <script src="<?= BASE_URL_STYLE ?>/JavaScript/quotation/quotationFunctions.js"></script>
     <script src="<?= BASE_URL_STYLE ?>/JavaScript/quotation/quotationCancel.js"></script>
+    <script src="<?= BASE_URL_STYLE ?>/JavaScript/quotation/quotationTableFunctions.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <div class="content">
         <div class="topNavigationBar">
             <div class="topNavigationBar1" style="width: 100%; display: flex; align-items: center;">
@@ -35,15 +37,16 @@ include PROJECT_ROOT . "/Controller/employeeLogController.php";
             <div style="width: 100vw; display: flex; justify-content: center;">
                 <div style="display: flex; flex-direction: row; justify-content: flex-start; 
                 align-items: flex-end; width: 85%;">
-                    <div style="width: 50%; margin-right: 0.5%; padding: 10px; 
-                        border: solid var(--sl-input-border-width) var(--sl-input-border-color); border-radius: 10px;">
+                    <div style="width: 100%; margin-right: 0.5%; padding: 10px; 
+                        border: solid var(--sl-input-border-width) var(--sl-input-border-color); border-radius: 10px; max-height: 500px; overflow-y: auto;">
                         <sl-tab-group placement="start">
                             <sl-tab slot="nav" panel="employeeSelection">Step 1</sl-tab>
                             <sl-tab slot="nav" panel="documentHeader">Step 2</sl-tab>
                             <sl-tab slot="nav" panel="documentInformation">Step 3</sl-tab>
-                            <sl-tab slot="nav" panel="documentInformationFooter">Step 4</sl-tab>
-                            <sl-tab slot="nav" panel="documentPreparerInformation">Step 5</sl-tab>
-                            <sl-tab slot="nav" panel="submitTheData">Step 6</sl-tab>
+                            <sl-tab slot="nav" panel="documentTable">Step 4</sl-tab>
+                            <sl-tab slot="nav" panel="documentInformationFooter">Step 5</sl-tab>
+                            <sl-tab slot="nav" panel="documentPreparerInformation">Step 6</sl-tab>
+                            <sl-tab slot="nav" panel="submitTheData">Step 7</sl-tab>
                             <sl-tab slot="nav" panel="Cancel">Cancel</sl-tab>
 
                             <sl-tab-panel name="employeeSelection">
@@ -95,9 +98,10 @@ include PROJECT_ROOT . "/Controller/employeeLogController.php";
                                 <sl-input id="qoutationBody_Details" class="column" label="Quotation for"
                                     placeholder="Ex. Installation & Repair" size="small"></sl-input>
                                 <br>
-                                <div style="display: flex; align-items: stretch; justify-content: flex-start;
+                                <div style="display: flex; align-items: flex-start; justify-content: flex-start;
                                 flex-direction: column; flex-wrap: nowrap;">
                                     <label>Load Customer Information</label>
+                                    <br>
                                     <sl-button id="loadCustomerInformation" variant="primary"
                                         size="small">Load</sl-button>
                                 </div>
@@ -154,39 +158,39 @@ include PROJECT_ROOT . "/Controller/employeeLogController.php";
                                     size="small">Cancel</sl-button>
                             </sl-tab-panel>
 
+                            <sl-tab-panel name="documentTable">
+                                <label style="font-weight: 600; font-size: 16px; color: #27BAFD;">Document Table</label>
+                                <br>
+                                <br>
+                                <div class="titleContent">
+                                    <table id="quotationTable" style="width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>Item</th>
+                                                <th>Description</th>
+                                                <th>Quantity</th>
+                                                <th>Price</th>
+                                                <th>Total Amount</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr class="total-row">
+                                                <td colspan="4">Grand Total</td>
+                                                <td id="grandTotalInput">0.00</td>
+                                                <td></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                    <div class="column">
+                                        <sl-button variant="primary" size="small" class="submitButton" onclick="addRow()">Add Row</button>
+                                    </div>
+                                </div>
+                            </sl-tab-panel>
+
                         </sl-tab-group>
-
-
-                    </div>
-                    <div style="width: 50%; height: 100%; margin-left: 0.5%; padding: 10px; 
-                    border: solid var(--sl-input-border-width) var(--sl-input-border-color); border-radius: 10px;">
-                        <p class="titleHeader">Document Body Table</p>
-                        <div class="titleContent">
-                            <table id="quotationTable">
-                                <thead>
-                                    <tr>
-                                        <th>Item</th>
-                                        <th>Description</th>
-                                        <th>Quantity</th>
-                                        <th>Price</th>
-                                        <th>Total Amount</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                                <tfoot>
-                                    <tr class="total-row">
-                                        <td colspan="4">Grand Total</td>
-                                        <td id="grandTotalInput">0.00</td>
-                                        <td></td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                            <div class="column">
-                                <button class="submitButton" onclick="addRow()">Add Row</button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

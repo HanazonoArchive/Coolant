@@ -206,6 +206,7 @@ class AppointmentManager
                     appointment.category AS Appointment_Category
                 FROM appointment
                 JOIN customer ON appointment.customer_id = customer.id
+                WHERE appointment.status = 'Pending'
                 $order");
 
             $stmt->execute();

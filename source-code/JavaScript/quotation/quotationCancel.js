@@ -27,10 +27,10 @@ class CancelAppointmentForm {
 
   async sendFormData(formData) {
     try {
-      const response = await fetch("quotation.php", {
+      const response = await fetch(window.location.pathname, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: formData, // JSON string
+        body: formData,
       });
 
       const data = await response.text();

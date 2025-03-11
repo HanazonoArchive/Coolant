@@ -5,7 +5,7 @@ include PROJECT_ROOT_DB . "/Database/DBConnection.php";
 class AppointmentManager
 {
     private $conn;
-    private $default_order = "ORDER BY appointment.id ASC"; // Define as a class property
+    private $default_order = "ORDER BY appointment.status ASC"; // Define as a class property
 
     public function __construct($db)
     {
@@ -66,7 +66,7 @@ class AppointmentManager
     
             // Ensure the query always has a valid ORDER BY
             if (!str_contains($query, "ORDER BY")) {
-                $query .= " ORDER BY appointment.id ASC";
+                $query .= " ORDER BY appointment.status ASC";
             }
     
             $this->fetchAppointments($query);

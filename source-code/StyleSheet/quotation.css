@@ -74,23 +74,31 @@ sl-input[type="number"]::-webkit-outer-spin-button {
   height: 500px;
 }
 
+.titleContent {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
 /* Custom scrollbar */
-.quotationTable::-webkit-scrollbar {
+.titleContent::-webkit-scrollbar {
   width: 10px;
 }
 
-.quotationTable::-webkit-scrollbar-track {
+.titleContent::-webkit-scrollbar-track {
   background: #1a1a1e;
   border-radius: 10px;
 }
 
-.quotationTable::-webkit-scrollbar-thumb {
+.titleContent::-webkit-scrollbar-thumb {
   background: #0ea5e9;
   border-radius: 10px;
   transition: background 0.3s ease-in-out;
 }
 
-.quotationTable table {
+.titleContent table {
   width: 100%;
   border-collapse: collapse;
   border: none;
@@ -98,7 +106,7 @@ sl-input[type="number"]::-webkit-outer-spin-button {
   border-radius: 5px;
 }
 
-.quotationTable th {
+.titleContent th {
   color: #0ea5e9;
   background: #1a1a1e;
   font-weight: 400;
@@ -108,21 +116,21 @@ sl-input[type="number"]::-webkit-outer-spin-button {
   border-bottom: 1px solid #36363b;
 }
 
-.quotationTable tr:nth-child(even) td {
+.titleContent tr:nth-child(even) td {
   background-color: #1a1a1e;
   color: var(--sl-input-label-color);
   border: 0px;
   border-bottom: 1px solid #36363b;
 }
 
-.quotationTable tr:nth-child(odd) td {
+.titleContent tr:nth-child(odd) td {
   background-color: var(--background-color);
   color: var(--sl-input-label-color);
   border: 0px;
   border-bottom: 1px solid #36363b;
 }
 
-.quotationTable td {
+.titleContent td {
   padding: 10px 4px;
   transition: 0.3s ease-in-out;
   font-size: 12px;

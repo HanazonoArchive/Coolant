@@ -74,7 +74,8 @@ class CustomerFeedbackManager
         try {
             $stmt = $this->conn->prepare("
             SELECT customer.id, customer.name 
-            FROM customer
+            FROM customer JOIN appointment ON customer.id = appointment.customer_id
+            WHERE appointment.status = 'Pending'
             ORDER BY customer.id ASC
         ");
             $stmt->execute();
