@@ -1,0 +1,207 @@
+sl-input[type="number"] {
+    appearance: textfield; /* Standard */
+    -moz-appearance: textfield; /* Firefox */
+  }
+  
+  sl-input[type="number"]::-webkit-inner-spin-button,
+  sl-input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none; /* Chrome, Safari, Edge, Opera */
+    margin: 0;
+  }
+  
+  .content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .topNavbar::part(base) {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 20px;
+  }
+  
+  .topNavigationBar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    width: 86.5%;
+  }
+  
+  .topColumn {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .column1 {
+    width: 98%;
+    margin-right: 0.5%;
+  }
+  
+  .column2 {
+    width: 98%;
+    margin-left: 0.5%;
+  }
+  
+  .column {
+    padding-top: 10px;
+  }
+  
+  .quotationTable {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    border: solid var(--sl-input-border-width) var(--sl-input-border-color);
+    width: 85%;
+    padding: 10px;
+    border-radius: 10px;
+    overflow: auto;
+    margin-top: 10px;
+    height: 500px;
+  }
+  
+  .appointmentTable {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    max-height: 500px;
+  }
+  
+  /* Custom scrollbar */
+  .appointmentTable::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  .appointmentTable::-webkit-scrollbar-track {
+    background: #1a1a1e;
+    border-radius: 10px;
+  }
+  
+  .appointmentTable::-webkit-scrollbar-thumb {
+    background: #0ea5e9;
+    border-radius: 10px;
+    transition: background 0.3s ease-in-out;
+  }
+  
+  .appointmentTable table {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+    height: auto;
+    border-radius: 5px;
+  }
+  
+  .appointmentTable th {
+    color: #0ea5e9;
+    background: #1a1a1e;
+    font-weight: 400;
+    font-size: 12px;
+    padding: 4px 2px;
+    border: 0px;
+    border-bottom: 1px solid #36363b;
+  }
+  
+  .appointmentTable tr:nth-child(even) td {
+    background-color: #1a1a1e;
+    color: var(--sl-input-label-color);
+    border: 0px;
+    border-bottom: 1px solid #36363b;
+  }
+  
+  .appointmentTable tr:nth-child(odd) td {
+    background-color: var(--background-color);
+    color: var(--sl-input-label-color);
+    border: 0px;
+    border-bottom: 1px solid #36363b;
+  }
+  
+  .appointmentTable td {
+    padding: 10px 4px;
+    transition: 0.3s ease-in-out;
+    font-size: 12px;
+    justify-content: center;
+  }
+  
+
+  .pendingCollectionTable {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    max-height: 500px;
+  }
+  
+  /* Custom scrollbar */
+  .pendingCollectionTable::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  .pendingCollectionTable::-webkit-scrollbar-track {
+    background: #1a1a1e;
+    border-radius: 10px;
+  }
+  
+  .pendingCollectionTable::-webkit-scrollbar-thumb {
+    background: #0ea5e9;
+    border-radius: 10px;
+    transition: background 0.3s ease-in-out;
+  }
+  
+  .pendingCollectionTable table {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+    height: auto;
+    border-radius: 5px;
+  }
+  
+  .pendingCollectionTable th {
+    color: #0ea5e9;
+    background: #1a1a1e;
+    font-weight: 400;
+    font-size: 12px;
+    padding: 4px 2px;
+    border: 0px;
+    border-bottom: 1px solid #36363b;
+  }
+  
+  .pendingCollectionTable tr:nth-child(even) td {
+    background-color: #1a1a1e;
+    color: var(--sl-input-label-color);
+    border: 0px;
+    border-bottom: 1px solid #36363b;
+  }
+  
+  .pendingCollectionTable tr:nth-child(odd) td {
+    background-color: var(--background-color);
+    color: var(--sl-input-label-color);
+    border: 0px;
+    border-bottom: 1px solid #36363b;
+  }
+  
+  .pendingCollectionTable td {
+    padding: 10px 4px;
+    transition: 0.3s ease-in-out;
+    font-size: 12px;
+    justify-content: center;
+  }
+  
+
+  

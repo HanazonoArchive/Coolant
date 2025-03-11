@@ -143,7 +143,7 @@ include PROJECT_ROOT . "/Controller/quotationController.php";
                             <sl-tab-panel name="submitTheData">
                                 <br>
                                 <sl-button id="generateQoutation" variant="primary" size="small">Generate</sl-button>
-                                <sl-button variant="primary" size="small" href="<?= BASE_URL_STYLE ?>/printablepage/print-quotation.php">
+                                <sl-button variant="primary" size="small" href="<?= BASE_URL_STYLE ?>/PrintablePage/print-quotation.php">
                                     Visit Print</sl-button>
                             </sl-tab-panel>
 

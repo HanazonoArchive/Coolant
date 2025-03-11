@@ -1,0 +1,236 @@
+@import url("../StyleSheet/fonts/inter.css");
+
+:root {
+  --background-color: #e3f2fd; /* Light Blue */
+  --navbar-color: #f5f5f5; /* Soft Blue */
+  --text-color: #000000; /* Deep Blue */
+  --optional-color: #42a5f5; /* Vibrant Blue */
+  --highlighted-color: #1e88e5; /* Medium Blue */
+  --afuckingcolor: #64b5f6; /* Sky Blue */
+  --afuckingtextcolor: #102027; /* Dark Blue-Grey */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  font-family: "Inter", sans-serif;
+  color: var(--text-color);
+}
+
+.body1 {
+  padding: 0px;
+  margin: 0px 5%;
+  padding-top: 10px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+}
+
+.columnSR {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 40px;
+}
+
+.HorizontalLine {
+  background-color: var(--highlighted-color);
+  width: 90%;
+  height: 3px;
+}
+.companyName {
+  padding: 0px;
+  padding-top: 10px;
+  margin: 0px;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.CompanyDetails {
+  padding: 3px 0px;
+  margin: 0px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.documentTITLE {
+  padding: 0px;
+  margin: 0px;
+  font-size: 22px;
+  font-weight: 800;
+  display: flex;
+  justify-content: center;
+}
+
+.body {
+  padding: 0px;
+  margin: 0px 5%;
+}
+
+.documentBody {
+  padding: 2px 0px;
+  margin: 0px;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.table {
+  padding: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin: 0px 5%;
+}
+
+.table table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid black;
+  height: auto;
+}
+
+.table th {
+  color: black;
+  background: white;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 4px 0px;
+  border: 1px solid black;
+  width: 150px;
+}
+
+.table tr:nth-child(even) td {
+  background-color: white;
+  border: 1px solid black;
+}
+
+.table tr:nth-child(odd) td {
+  background-color: white;
+  border: 1px solid black;
+}
+
+.table td {
+  padding: 5px 5px;
+  transition: 0.3s ease-in-out;
+  font-size: 14px;
+}
+
+.table1 {
+  padding: 0px;
+  padding-top: 20px;
+  padding-bottom: 0px;
+  margin: 0px 5%;
+}
+
+.table1 table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid black;
+  height: auto;
+}
+
+.table1 th {
+  color: black;
+  background: white;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 4px 0px;
+  border: 1px solid black;
+  width: 150px;
+}
+
+.table1 tr:nth-child(even) td {
+  background-color: white;
+  border: 1px solid black;
+}
+
+.table1 tr:nth-child(odd) td {
+  background-color: white;
+  border: 1px solid black;
+}
+
+.table1 td {
+  padding: 5px 5px;
+  transition: 0.3s ease-in-out;
+  font-size: 14px;
+}
+
+.TD1 {
+  width: 50px;
+}
+
+.TD2 {
+  width: 350px;
+}
+
+.TD3 {
+  width: 30px;
+}
+
+.TD4 {
+  width: 120px;
+}
+
+.Details {
+  padding: 2px 0px;
+  margin: 0px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.techInfo {
+  padding: 0px 0px;
+  padding-top: 40px;
+  margin: 0px 5%;
+  margin-bottom: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.TechInfoText {
+  padding: 2px 0px;
+  margin: 0px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+@media print {
+  @page {
+    size: auto; /* Default page size */
+    margin: 0; /* Remove default browser margins */
+  }
+
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    margin: 0; /* Ensure no extra margins */
+    padding: 10px; /* Optional padding */
+  }
+
+  /* Hide elements that shouldn't be printed */
+  .no-print {
+    display: none !important;
+  }
+
+  /* Ensure tables print correctly */
+  .table table {
+    page-break-inside: avoid;
+  }
+}

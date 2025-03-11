@@ -124,7 +124,7 @@ include PROJECT_ROOT . "/Controller/serviceReportController.php";
                             <sl-tab-panel name="submitTheData">
                                 <br>
                                 <sl-button id="generateServiceReport" variant="primary" size="small">Generate</sl-button>
-                                <sl-button variant="primary" size="small" href="<?= BASE_URL_STYLE ?>/printablepage/print-serviceReport.php">
+                                <sl-button variant="primary" size="small" href="<?= BASE_URL_STYLE ?>/PrintablePage/print-serviceReport.php">
                                     Visit Print</sl-button>
                             </sl-tab-panel>
 
