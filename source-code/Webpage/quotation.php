@@ -40,13 +40,13 @@ include PROJECT_ROOT . "/Controller/quotationController.php";
                     <div style="width: 100%; margin-right: 0.5%; padding: 10px; 
                         border: solid var(--sl-input-border-width) var(--sl-input-border-color); border-radius: 10px; max-height: 500px; overflow-y: auto;">
                         <sl-tab-group placement="start">
-                            <sl-tab slot="nav" panel="employeeSelection">Step 1</sl-tab>
-                            <sl-tab slot="nav" panel="documentHeader">Step 2</sl-tab>
-                            <sl-tab slot="nav" panel="documentInformation">Step 3</sl-tab>
-                            <sl-tab slot="nav" panel="documentTable">Step 4</sl-tab>
-                            <sl-tab slot="nav" panel="documentInformationFooter">Step 5</sl-tab>
-                            <sl-tab slot="nav" panel="documentPreparerInformation">Step 6</sl-tab>
-                            <sl-tab slot="nav" panel="submitTheData">Step 7</sl-tab>
+                            <sl-tab slot="nav" panel="employeeSelection">Step 1 - Select Employee</sl-tab>
+                            <sl-tab slot="nav" panel="documentHeader">Step 2 - Docs. Header </sl-tab>
+                            <sl-tab slot="nav" panel="documentInformation">Step 3 - Docs. Info.</sl-tab>
+                            <sl-tab slot="nav" panel="documentTable">Step 4 - Quota. Table</sl-tab>
+                            <sl-tab slot="nav" panel="documentInformationFooter">Step 5 - Docs. Footer</sl-tab>
+                            <sl-tab slot="nav" panel="documentPreparerInformation">Step 6 - Preparer Info.</sl-tab>
+                            <sl-tab slot="nav" panel="submitTheData">Output</sl-tab>
                             <sl-tab slot="nav" panel="Cancel">Cancel</sl-tab>
 
                             <sl-tab-panel name="employeeSelection">
@@ -159,7 +159,7 @@ include PROJECT_ROOT . "/Controller/quotationController.php";
                             </sl-tab-panel>
 
                             <sl-tab-panel name="documentTable">
-                                <label style="font-weight: 600; font-size: 16px; color: #27BAFD;">Document Table</label>
+                                <label style="font-weight: 600; font-size: 16px; color: #27BAFD;">Quotation Table</label>
                                 <br>
                                 <br>
                                 <div class="titleContent">
