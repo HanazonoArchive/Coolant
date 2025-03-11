@@ -17,19 +17,19 @@ function updateDetails(data) {
     let statusBgColor = "#1A1A1E"; // Default Light Gray
     switch (data.Status) {
         case "Pending":
-            statusColor = "#EDB013";
+            statusColor = "#F39C12";
             statusBgColor = "#1A1A1E";
             break;
         case "Working":
-            statusColor = "#27BAFD";
+            statusColor = "#3498DB";
             statusBgColor = "#1A1A1E";
             break;
         case "Completed":
-            statusColor = "#3ADF76";
+            statusColor = "#2ECC71";
             statusBgColor = "#1A1A1E";
             break;
         case "Cancelled":
-            statusColor = "#EC5758";
+            statusColor = "#E74C3C";
             statusBgColor = "#1A1A1E";
             break;
     }
@@ -47,15 +47,15 @@ function updateDetails(data) {
             priorityBgColor = "#1A1A1E";
             break;
         case "Medium":
-            priorityColor = "#EDB013";
+            priorityColor = "#F1C40F";
             priorityBgColor = "#1A1A1E";
             break;
         case "High":
-            priorityColor = "#3ADF76";
+            priorityColor = "#E67E22";
             priorityBgColor = "#1A1A1E";
             break;
         case "Urgent":
-            priorityColor = "#EC5758";
+            priorityColor = "#E74C3C";
             priorityBgColor = "#1A1A1E";
             break;
     }
@@ -81,11 +81,11 @@ function getDateColor(appointmentDate) {
     const daysDiff = timeDiff / (1000 * 60 * 60 * 24); // Convert ms to days
 
     if (daysDiff <= 7) {
-        return "#EC5758"; // Red (Less than a week)
+        return "#E74C3C"; // Red (Less than a week)
     } else if (appointment.getMonth() === currentDate.getMonth() && appointment.getFullYear() === currentDate.getFullYear()) {
-        return "#3ADF76"; // Yellow (This month)
+        return "#F39C12"; // Yellow (This month)
     } else {
-        return "#27BAFD"; // Green (More than a month away)
+        return "#2ECC71"; // Green (More than a month away)
     }
 }
 

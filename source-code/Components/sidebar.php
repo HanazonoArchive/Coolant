@@ -65,7 +65,7 @@ define('SPECIFIC_URL', '/Coolant')
         <label style="padding-left: 10px;">Settings</label>
         <sl-divider></sl-divider>
         <sl-menu-item>
-          <sl-icon slot="prefix" name="file-person"></sl-icon>
+          <sl-icon slot="prefix" name="gear"></sl-icon>
           <a href="<?= BASE_URL ?>/Webpage/preferences.php">Preferences</a>
         </sl-menu-item>
       </sl-menu>
