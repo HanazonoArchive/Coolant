@@ -1,5 +1,8 @@
 <?php
 define('PROJECT_ROOT', $_SERVER['DOCUMENT_ROOT'] . '/Coolant/source-code');
+define('BASE_URL_STYLE', '/Coolant/source-code');
+
+include PROJECT_ROOT . "/Controller/employeeLogController.php";
 ?>
 
 <!DOCTYPE html>
@@ -8,14 +11,194 @@ define('PROJECT_ROOT', $_SERVER['DOCUMENT_ROOT'] . '/Coolant/source-code');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="<?= BASE_URL_STYLE ?>/StyleSheet/quotation.css">
     <title>Quotation</title>
 </head>
 
 <body>
-    <?php require PROJECT_ROOT . "/Components/sidebar.php"; ?>
+    <script src="<?= BASE_URL_STYLE ?>/JavaScript/quotation/quotationTableFunctions.js"></script>
+    <script src="<?= BASE_URL_STYLE ?>/JavaScript/quotation/quotationFunctions.js"></script>
+    <script src="<?= BASE_URL_STYLE ?>/JavaScript/quotation/quotationCancel.js"></script>
     <div class="content">
-        Quotation
+        <div class="topNavigationBar">
+            <div class="topNavigationBar1" style="width: 100%; display: flex; align-items: center;">
+                <?php require PROJECT_ROOT . "/Components/sidebar.php"; ?>
+                <sl-breadcrumb class="topNavbar">
+                    <sl-breadcrumb-item>
+                        <sl-icon slot="prefix" name="layout-text-sidebar-reverse"></sl-icon>
+                        <label style="padding-left: 10px; font-size: 18px; font-weight: 600;">| Quotation</label>
+                    </sl-breadcrumb-item>
+                </sl-breadcrumb>
+            </div>
+        </div>
+        <nav class="sl-theme-dark">
+            <div style="width: 100vw; display: flex; justify-content: center;">
+                <div style="display: flex; flex-direction: row; justify-content: flex-start; 
+                align-items: flex-end; width: 85%;">
+                    <div style="width: 50%; margin-right: 0.5%; padding: 10px; 
+                        border: solid var(--sl-input-border-width) var(--sl-input-border-color); border-radius: 10px;">
+                        <sl-tab-group placement="start">
+                            <sl-tab slot="nav" panel="employeeSelection">Step 1</sl-tab>
+                            <sl-tab slot="nav" panel="documentHeader">Step 2</sl-tab>
+                            <sl-tab slot="nav" panel="documentInformation">Step 3</sl-tab>
+                            <sl-tab slot="nav" panel="documentInformationFooter">Step 4</sl-tab>
+                            <sl-tab slot="nav" panel="documentPreparerInformation">Step 5</sl-tab>
+                            <sl-tab slot="nav" panel="submitTheData">Step 6</sl-tab>
+                            <sl-tab slot="nav" panel="Cancel">Cancel</sl-tab>
+
+                            <sl-tab-panel name="employeeSelection">
+                                <label style="font-weight: 600; font-size: 16px; color: #27BAFD;">Select
+                                    Employee</label>
+                                <sl-select id="quotationDetails_AppointmentID" class="column" label="Select Appointment"
+                                    size="small">
+                                    <sl-option value="">Loading..</sl-option>
+                                </sl-select>
+                                <sl-select id="quotationDetails_EmployeeID1" class="column" label="Technician 1"
+                                    size="small">
+                                    <sl-option value="">Loading..</sl-option>
+                                </sl-select>
+                                <sl-select id="quotationDetails_EmployeeID2" class="column" label="Technician 2"
+                                    size="small">
+                                    <sl-option value="">Loading..</sl-option>
+                                </sl-select>
+                                <sl-select id="quotationDetails_EmployeeID3" class="column" label="Technician 3"
+                                    size="small">
+                                    <sl-option value="">Loading..</sl-option>
+                                </sl-select>
+                            </sl-tab-panel>
+
+
+                            <sl-tab-panel name="documentHeader">
+                                <label style="font-weight: 600; font-size: 16px; color: #27BAFD;">Documents
+                                    Header</label>
+                                <sl-input id="qoutationHeader_CompanyName" class="column" label="Company Name"
+                                    placeholder="Ex. Aircool JV" size="small"></sl-input>
+                                <sl-input id="qoutationHeader_CompanyAddress" class="column" label="Company Address"
+                                    placeholder="Ex. Santa Rosa St." size="small"></sl-input>
+
+                                <sl-input id="qoutationHeader_CompanyNumber" class="column" label="Contact Number"
+                                    placeholder="Ex. (123) 456-789" size="small"></sl-input>
+                                <sl-input id="qoutationHeader_CompanyEmail" class="column" label="Email Address"
+                                    placeholder="Ex. example@email.com" size="small"></sl-input>
+                            </sl-tab-panel>
+
+
+                            <sl-tab-panel name="documentInformation"><label
+                                    style="font-weight: 600; font-size: 16px; color: #27BAFD;">Documents
+                                    Information</label>
+                                <sl-input id="qoutationBody_CustomerName" class="column" label="Customer Name"
+                                    size="small"></sl-input>
+                                <sl-input id="qoutationBody_Location" class="column" label="Customer Address"
+                                    size="small"></sl-input>
+                                <sl-input config-id="date" id="qoutationBody_Date" class="column" label="Date"
+                                    placeholder="Ex. 20XX-12-25" size="small"></sl-input>
+                                <sl-input id="qoutationBody_Details" class="column" label="Quotation for"
+                                    placeholder="Ex. Installation & Repair" size="small"></sl-input>
+                                <br>
+                                <div style="display: flex; align-items: stretch; justify-content: flex-start;
+                                flex-direction: column; flex-wrap: nowrap;">
+                                    <label>Load Customer Information</label>
+                                    <sl-button id="loadCustomerInformation" variant="primary"
+                                        size="small">Load</sl-button>
+                                </div>
+                            </sl-tab-panel>
+
+
+                            <sl-tab-panel name="documentInformationFooter">
+                                <label style="font-weight: 600; font-size: 16px; color: #27BAFD;">Documents
+                                    Information Footer</label>
+                                <sl-input id="qoutationFooter_Details1" class="column" label="Warranty Details"
+                                    placeholder="Ex. Repair Warranty" size="small"></sl-input>
+                                <sl-input id="qoutationFooter_Details2" class="column" label="Warranty Duration"
+                                    placeholder="Ex. 1 Year upon Completion" size="small"></sl-input>
+                                <sl-input id="qoutationFooter_Details3" class="column" label="Quotation Message"
+                                    placeholder="Ex. Thank you for letting us submit out quotation."
+                                    size="small"></sl-input>
+                                <sl-input id="qoutationFooter_Details4" class="column" label="Quotation Message"
+                                    placeholder="Ex. If you have any concern regarding to this matter, give us a call!"
+                                    size="small"></sl-input>
+                            </sl-tab-panel>
+
+
+                            <sl-tab-panel name="documentPreparerInformation">
+                                <label style="font-weight: 600; font-size: 16px; color: #27BAFD;">Document
+                                    Preparer Information</label>
+                                <sl-input id="qoutationFooter_TechnicianNamePreparer" class="column"
+                                    label="Preparer Name" placeholder="Ex. John Doe" size="small"></sl-input>
+                                <sl-input id="qoutationFooter_TechnicianPositionPreparer" class="column"
+                                    label="Preparer Position" placeholder="Ex. Technician" size="small"></sl-input>
+                                <sl-input id="qoutationFooter_TechnicianNameManager" class="column"
+                                    label="Preparer Contact Number" placeholder="Ex. (123) 456-789"
+                                    size="small"></sl-input>
+                                <sl-input id="qoutationFooter_TechnicianPositionManager" class="column"
+                                    label="Preparer Email Address" placeholder="Ex. example@email.com"
+                                    size="small"></sl-input>
+                            </sl-tab-panel>
+
+
+                            <sl-tab-panel name="submitTheData">
+                                <br>
+                                <sl-button id="generateQoutation" variant="primary" size="small">Generate</sl-button>
+                                <sl-button variant="primary" size="small" href="<?= BASE_URL_STYLE ?>/printablepage/print-quotation.php">
+                                    Visit Print</sl-button>
+                            </sl-tab-panel>
+
+                            <sl-tab-panel name="Cancel">
+                                <br>
+                                <sl-select id="cancelAppointment_ID" label="Appointment"
+                                    help-text="Select the Appointment you want to Cancel" size="small">
+                                    <sl-option value="">Loading...</sl-option>
+                                </sl-select>
+                                <br>
+                                <sl-button id="submitCancelAppointment" variant="primary"
+                                    size="small">Cancel</sl-button>
+                            </sl-tab-panel>
+
+                        </sl-tab-group>
+
+
+                    </div>
+                    <div style="width: 50%; height: 100%; margin-left: 0.5%; padding: 10px; 
+                    border: solid var(--sl-input-border-width) var(--sl-input-border-color); border-radius: 10px;">
+                        <p class="titleHeader">Document Body Table</p>
+                        <div class="titleContent">
+                            <table id="quotationTable">
+                                <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Description</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                        <th>Total Amount</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                                <tfoot>
+                                    <tr class="total-row">
+                                        <td colspan="4">Grand Total</td>
+                                        <td id="grandTotalInput">0.00</td>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            <div class="column">
+                                <button class="submitButton" onclick="addRow()">Add Row</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
     </div>
+    <script>
+        document.querySelectorAll('[config-id="date"]').forEach((datePicker) => {
+            flatpickr(datePicker, {
+                minDate: "today"
+            });
+        });
+    </script>
 </body>
 
 </html>
