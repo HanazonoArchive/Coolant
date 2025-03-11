@@ -75,6 +75,14 @@ CREATE TABLE `billing_statement`(
     `amount` DECIMAL(10, 2) NOT NULL
 );
 
+CREATE TABLE settings_setup (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE,
+    category VARCHAR(50) NOT NULL,
+    content JSON NOT NULL
+);
+
+
 -- Foreign Keys (Relaxed, Allow NULLs, Removed Constraints for Easier Testing)
 ALTER TABLE `appointment`
     ADD CONSTRAINT `appointment_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customer`(`id`) ON DELETE SET NULL;
