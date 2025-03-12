@@ -150,14 +150,16 @@ include PROJECT_ROOT . "/Controller/customerController.php";
                     </div>
                 </div>
             </div>
-            <div style="width: 100vw; display: flex; justify-content: center;">
-                <div class="customerTable">
-                    <?= $table_content; ?>
+            <div style="width: 100%;display: flex;justify-content: center;flex-direction: column;align-items: center;flex-wrap: nowrap;">
+                <div style="width: 100%; display: flex; justify-content: center;">
+                    <div class="customerTable">
+                        <?= $table_content; ?>
+                    </div>
                 </div>
-            </div>
-            <div style="width: 100vw; display: flex; justify-content: center;">
-                <div class="customerFeedbackTable">
-                    <?= $table_content_feedback; ?>
+                <div style="width: 100%; display: flex; justify-content: center;">
+                    <div class="customerFeedbackTable">
+                        <?= $table_content_feedback; ?>
+                    </div>
                 </div>
             </div>
         </nav>

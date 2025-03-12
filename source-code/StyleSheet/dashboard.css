@@ -40,3 +40,283 @@ sl-input[type="number"]::-webkit-outer-spin-button {
 .column {
   padding-right: 10px;
 }
+
+.scheduleTable {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  border-radius: 10px;
+  overflow: auto;
+  margin-top: 10px;
+  height: 100%;
+}
+
+/* Custom scrollbar */
+.scheduleTable::-webkit-scrollbar {
+  width: 10px;
+}
+
+.scheduleTable::-webkit-scrollbar-track {
+  background: #1a1a1e;
+  border-radius: 10px;
+}
+
+.scheduleTable::-webkit-scrollbar-thumb {
+  background: #0ea5e9;
+  border-radius: 10px;
+  transition: background 0.3s ease-in-out;
+}
+
+.scheduleTable table {
+  width: 100%;
+  border-collapse: collapse;
+  border: none;
+  height: auto;
+  border-radius: 5px;
+}
+
+.scheduleTable th {
+  color: #0ea5e9;
+  background: #1a1a1e;
+  font-weight: 400;
+  font-size: 12px;
+  padding: 4px 2px;
+  border: 0px;
+  border-bottom: 1px solid #36363b;
+}
+
+.scheduleTable tr:nth-child(even) td {
+  background-color: #1a1a1e;
+  color: var(--sl-input-label-color);
+  border: 0px;
+  border-bottom: 1px solid #36363b;
+}
+
+.scheduleTable tr:nth-child(odd) td {
+  background-color: var(--background-color);
+  color: var(--sl-input-label-color);
+  border: 0px;
+  border-bottom: 1px solid #36363b;
+}
+
+.scheduleTable td {
+  padding: 10px 5px;
+  transition: 0.3s ease-in-out;
+  font-size: 12px;
+  justify-content: center;
+}
+
+.pendingTable {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  border-radius: 10px;
+  overflow: auto;
+  margin-top: 10px;
+  height: 100%;
+}
+
+/* Custom scrollbar */
+.pendingTable::-webkit-scrollbar {
+  width: 10px;
+}
+
+.pendingTable::-webkit-scrollbar-track {
+  background: #1a1a1e;
+  border-radius: 10px;
+}
+
+.pendingTable::-webkit-scrollbar-thumb {
+  background: #0ea5e9;
+  border-radius: 10px;
+  transition: background 0.3s ease-in-out;
+}
+
+.pendingTable table {
+  width: 100%;
+  border-collapse: collapse;
+  border: none;
+  height: auto;
+  border-radius: 5px;
+}
+
+.pendingTable th {
+  color: #0ea5e9;
+  background: #1a1a1e;
+  font-weight: 400;
+  font-size: 12px;
+  padding: 4px 2px;
+  border: 0px;
+  border-bottom: 1px solid #36363b;
+}
+
+.pendingTable tr:nth-child(even) td {
+  background-color: #1a1a1e;
+  color: var(--sl-input-label-color);
+  border: 0px;
+  border-bottom: 1px solid #36363b;
+}
+
+.pendingTable tr:nth-child(odd) td {
+  background-color: var(--background-color);
+  color: var(--sl-input-label-color);
+  border: 0px;
+  border-bottom: 1px solid #36363b;
+}
+
+.pendingTable td {
+  padding: 10px 5px;
+  transition: 0.3s ease-in-out;
+  font-size: 12px;
+  justify-content: center;
+}
+
+.employeeTable {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  border-radius: 10px;
+  overflow: auto;
+  margin-top: 10px;
+  height: 100%;
+}
+
+/* Custom scrollbar */
+.employeeTable::-webkit-scrollbar {
+  width: 10px;
+}
+
+.employeeTable::-webkit-scrollbar-track {
+  background: #1a1a1e;
+  border-radius: 10px;
+}
+
+.employeeTable::-webkit-scrollbar-thumb {
+  background: #0ea5e9;
+  border-radius: 10px;
+  transition: background 0.3s ease-in-out;
+}
+
+.employeeTable table {
+  width: 100%;
+  border-collapse: collapse;
+  border: none;
+  height: auto;
+  border-radius: 5px;
+}
+
+.employeeTable th {
+  color: #0ea5e9;
+  background: #1a1a1e;
+  font-weight: 400;
+  font-size: 12px;
+  padding: 4px 2px;
+  border: 0px;
+  border-bottom: 1px solid #36363b;
+}
+
+.employeeTable tr:nth-child(even) td {
+  background-color: #1a1a1e;
+  color: var(--sl-input-label-color);
+  border: 0px;
+  border-bottom: 1px solid #36363b;
+}
+
+.employeeTable tr:nth-child(odd) td {
+  background-color: var(--background-color);
+  color: var(--sl-input-label-color);
+  border: 0px;
+  border-bottom: 1px solid #36363b;
+}
+
+.employeeTable td {
+  padding: 10px 5px;
+  transition: 0.3s ease-in-out;
+  font-size: 12px;
+  justify-content: center;
+}
+
+/* Container for the circle */
+.progressContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 50vmin; /* Use viewport units for responsive scaling */
+  height: 50vmin; /* Same here to maintain a square aspect ratio */
+  max-width: 200px; /* Limit the maximum size on larger screens */
+  max-height: 200px; /* Same for height */
+  min-width: 100px; /* Set a minimum size for smaller screens */
+  min-height: 100px; /* Same for height */
+  margin: 0 auto; /* Center it horizontally */
+}
+
+/* Styling for the progress circle */
+.progressCircle {
+  width: 100%; /* Inherit width from the container */
+  height: 100%; /* Inherit height from the container */
+  border-radius: 50%; /* Make it circular */
+  background: conic-gradient(#ddd 0%, #ddd 100%); /* Background circle */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3vw; /* Responsive font size relative to viewport */
+  font-weight: bold;
+  position: relative;
+  transition: font-size 0.3s ease; /* Smooth font size transition */
+}
+
+/* SVG styling */
+.progressCircle svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg); /* Start the progress circle from top */
+}
+
+.centerCircle {
+  width: 80%; /* Inherit width from the container */
+  height: 80%; /* Inherit height from the container */
+  border-radius: 50%; /* Make it circular */
+  background: #1A1A1E;/* Background circle */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transition: font-size 0.3s ease; /* Smooth font size transition */
+}
+
+/* Circle element inside SVG */
+.progressCircle circle {
+  fill: none;
+  stroke-width: 10; /* Stroke width for the circle */
+  stroke-linecap: round; /* Rounded edges for the progress stroke */
+  transition: stroke-dasharray 1s ease-in-out; /* Smooth progress animation */
+}
+
+/* Background circle */
+.progressCircle .bgCircle {
+  stroke: transparent; /* Light gray background */
+}
+
+/* Progress stroke */
+.progressCircle .progress {
+  stroke: var(--highlighted-color); /* Color for the progress stroke */
+  stroke-dasharray: 0, 283; /* Full circle circumference */
+}
+
+/* Progress number styling */
+.progressNumber {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 25%; /* Font size relative to the circle size */
+  font-weight: bold;
+  transition: font-size 0.3s ease; /* Smooth font size transition */
+}

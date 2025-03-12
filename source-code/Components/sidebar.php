@@ -60,16 +60,6 @@ define('SPECIFIC_URL', '/Coolant')
           <a href="<?= BASE_URL ?>/Webpage/Employee-Log.php">Employee Log</a>
         </sl-menu-item>
       </sl-menu>
-      <br>
-      <sl-menu>
-        <label style="padding-left: 10px;">Settings</label>
-        <sl-divider></sl-divider>
-        <sl-menu-item>
-          <sl-icon slot="prefix" name="gear"></sl-icon>
-          <a href="<?= BASE_URL ?>/Webpage/preferences.php">Preferences</a>
-        </sl-menu-item>
-      </sl-menu>
-
 
       <sl-button slot="footer" variant="primary">Close</sl-button>
     </sl-drawer>
