@@ -43,15 +43,15 @@ session_start();
                             <td><?= $item['item'] ?></td>
                             <td><?= $item['description'] ?></td>
                             <td><?= $item['quantity'] ?></td>
-                            <td><?= $item['price'] ?></td>
-                            <td><?= $item['total'] ?></td>
+                            <td><?= number_format((float)$item['price'], 2, '.', '') ?></td>
+                            <td><?= number_format((float)$item['total'], 2, '.', '') ?></td>
                         </tr>
                     <?php endforeach; ?>
                     <td></td>
                     <td></td>
                     <td></td>
                     <td><strong>Total Cost =></strong></td>
-                    <td><strong><?php echo $_SESSION['dBody']['tableTotalAmmount'] ?? "No data found"; ?></strong></td>
+                    <td><strong><?php echo number_format((float)($_SESSION['dBody']['tableTotalAmmount'] ?? 0), 2, '.', ''); ?></strong></td>
                 </table>
             <?php else : ?>
                 <p>No items found in session.</p>

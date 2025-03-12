@@ -3,6 +3,7 @@ define('PROJECT_ROOT', $_SERVER['DOCUMENT_ROOT'] . '/Coolant/source-code');
 define('BASE_URL_STYLE', '/Coolant/source-code');
 
 include PROJECT_ROOT . "/Controller/quotationController.php";
+include PROJECT_ROOT . "/Controller/dataRetrieval.php";
 ?>
 
 <!DOCTYPE html>
@@ -20,6 +21,7 @@ include PROJECT_ROOT . "/Controller/quotationController.php";
     <script src="<?= BASE_URL_STYLE ?>/JavaScript/quotation/quotationFunctions.js"></script>
     <script src="<?= BASE_URL_STYLE ?>/JavaScript/quotation/quotationCancel.js"></script>
     <script src="<?= BASE_URL_STYLE ?>/JavaScript/quotation/quotationTableFunctions.js"></script>
+    <script src="<?= BASE_URL_STYLE ?>/JavaScript/quotation/quotationLoadCustomer.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <div class="content">
         <div class="topNavigationBar">
@@ -37,7 +39,8 @@ include PROJECT_ROOT . "/Controller/quotationController.php";
             <div style="width: 100vw; display: flex; justify-content: center;">
                 <div style="display: flex; flex-direction: row; justify-content: flex-start; 
                 align-items: flex-end; width: 85%;">
-                    <div style="width: 100%; margin-right: 0.5%; padding: 10px; 
+                    <div
+                        style="width: 100%; margin-right: 0.5%; padding: 10px; 
                         border: solid var(--sl-input-border-width) var(--sl-input-border-color); border-radius: 10px; max-height: 500px; overflow-y: auto;">
                         <sl-tab-group placement="start">
                             <sl-tab slot="nav" panel="employeeSelection">Step 1 - Select Employee</sl-tab>
@@ -46,7 +49,7 @@ include PROJECT_ROOT . "/Controller/quotationController.php";
                             <sl-tab slot="nav" panel="documentTable">Step 4 - Quota. Table</sl-tab>
                             <sl-tab slot="nav" panel="documentInformationFooter">Step 5 - Docs. Footer</sl-tab>
                             <sl-tab slot="nav" panel="documentPreparerInformation">Step 6 - Preparer Info.</sl-tab>
-                            <sl-tab slot="nav" panel="submitTheData">Output</sl-tab>
+                            <sl-tab slot="nav" panel="submitTheData">Output / Load</sl-tab>
                             <sl-tab slot="nav" panel="Cancel">Cancel</sl-tab>
 
                             <sl-tab-panel name="employeeSelection">
@@ -142,9 +145,34 @@ include PROJECT_ROOT . "/Controller/quotationController.php";
 
                             <sl-tab-panel name="submitTheData">
                                 <br>
+                                <label style="font-weight: 600; font-size: 16px; color: #27BAFD;">
+                                        Output</label>
                                 <sl-button id="generateQoutation" variant="primary" size="small">Generate</sl-button>
-                                <sl-button variant="primary" size="small" href="<?= BASE_URL_STYLE ?>/PrintablePage/print-quotation.php">
+                                <sl-button variant="primary" size="small"
+                                    href="<?= BASE_URL_STYLE ?>/PrintablePage/print-quotation.php">
                                     Visit Print</sl-button>
+
+                                <div style="width: 300px;display: flex;padding-top: 20px;
+                                flex-direction: column;align-items: stretch;flex-wrap: nowrap;">
+                                    <label style="font-weight: 600; font-size: 16px; color: #27BAFD;">
+                                        Load Created Settings</label>
+                                    <sl-input id="settingName" class="column" label="Settings Name"
+                                        placeholder="Ex. AirCool Company Settings" size="small"></sl-input>
+                                    <sl-select id="settingsLoad" class="column" label="Select Settings to Load"
+                                        size="small">
+                                        <sl-option value="">Loading..</sl-option>
+                                    </sl-select>
+                                    <br>
+                                    <div>
+                                        <sl-button id="loadSettings" variant="success" size="small"
+                                            outline>Load</sl-button>
+                                        <sl-button id="updateSettings" variant="warning" size="small"
+                                            outline>Update</sl-button>
+                                        <sl-button id="deleteSettings" variant="danger" size="small"
+                                            outline>Delete</sl-button>
+                                    </div>
+                                </div>
+
                             </sl-tab-panel>
 
                             <sl-tab-panel name="Cancel">
@@ -159,7 +187,8 @@ include PROJECT_ROOT . "/Controller/quotationController.php";
                             </sl-tab-panel>
 
                             <sl-tab-panel name="documentTable">
-                                <label style="font-weight: 600; font-size: 16px; color: #27BAFD;">Quotation Table</label>
+                                <label style="font-weight: 600; font-size: 16px; color: #27BAFD;">Quotation
+                                    Table</label>
                                 <br>
                                 <br>
                                 <div class="titleContent">
@@ -185,11 +214,11 @@ include PROJECT_ROOT . "/Controller/quotationController.php";
                                         </tfoot>
                                     </table>
                                     <div class="column">
-                                        <sl-button variant="primary" size="small" class="submitButton" onclick="addRow()">Add Row</button>
+                                        <sl-button variant="primary" size="small" class="submitButton"
+                                            onclick="addRow()">Add Row</button>
                                     </div>
                                 </div>
                             </sl-tab-panel>
-
                         </sl-tab-group>
                     </div>
                 </div>

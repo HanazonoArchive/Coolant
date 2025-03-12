@@ -104,8 +104,8 @@ if ($quotationID) {
                         <tr>
                             <td class="TD1"><?= $item['item'] ?></td>
                             <td class="TD2"><?= $item['description'] ?></td>
-                            <td class="TD3"><?= $item['quantity'] ?></td>
-                            <td class="TD4"><?= $item['price'] ?></td>
+                            <td class="TD3"><?= number_format((float)$item['quantity'], 2) ?></td>
+                            <td class="TD4"><?= number_format((float)$item['price'], 2) ?></td>
                             <td><?= $item['total'] ?></td>
                         </tr>
                     <?php endforeach; ?>
@@ -117,8 +117,8 @@ if ($quotationID) {
                         <tr>
                             <td class="TD1"><?= $item['item'] ?></td>
                             <td class="TD2"><?= $item['description'] ?></td>
-                            <td class="TD3"><?= $item['quantity'] ?></td>
-                            <td class="TD4"><?= $item['price'] ?></td>
+                            <td class="TD3"><?= number_format((float)$item['quantity'], 2) ?></td>
+                            <td class="TD4"><?= number_format((float)$item['price'], 2) ?></td>
                             <td><?= $item['total'] ?></td>
                         </tr>
                     <?php endforeach; ?>
@@ -129,7 +129,7 @@ if ($quotationID) {
                         <td></td>
                         <td></td>
                         <td><strong>Final Price =></strong></td>
-                        <td><strong><?php echo $billingStatementAmount ?></strong></td>
+                        <td><strong><?php echo number_format((float)$billingStatementAmount, 2) ?></strong></td>
                     </tr>
                 <?php endif; ?>
 
