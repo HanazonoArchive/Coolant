@@ -89,10 +89,10 @@ async function sendFormData(formData, submitButton) {
     if (data.includes("success")) {
       submitButton.removeAttribute("loading");
         submitButton.setAttribute("variant", "success");
-        // setTimeout(() => {
-        //   window.location.reload();
-        // }, 3000);
-        // clearAllInputs();
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
+        clearAllInputs();
       }
   } catch (error) {
     console.error("Error fetching data:", error);

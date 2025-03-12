@@ -22,6 +22,7 @@ include PROJECT_ROOT . "/Controller/dataRetrieval.php";
     <script src="<?= BASE_URL_STYLE ?>/JavaScript/quotation/quotationCancel.js"></script>
     <script src="<?= BASE_URL_STYLE ?>/JavaScript/quotation/quotationTableFunctions.js"></script>
     <script src="<?= BASE_URL_STYLE ?>/JavaScript/quotation/quotationLoadCustomer.js"></script>
+    <script src="<?= BASE_URL_STYLE ?>/JavaScript/quotation/quotationSettings.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <div class="content">
         <div class="topNavigationBar">
@@ -54,7 +55,7 @@ include PROJECT_ROOT . "/Controller/dataRetrieval.php";
 
                             <sl-tab-panel name="employeeSelection">
                                 <label style="font-weight: 600; font-size: 16px; color: #27BAFD;">Select
-                                    Employee</label>
+                                    Employee & Appointment</label>
                                 <sl-select id="quotationDetails_AppointmentID" class="column" label="Select Appointment"
                                     size="small">
                                     <sl-option value="">Loading..</sl-option>
@@ -78,14 +79,14 @@ include PROJECT_ROOT . "/Controller/dataRetrieval.php";
                                 <label style="font-weight: 600; font-size: 16px; color: #27BAFD;">Documents
                                     Header</label>
                                 <sl-input id="qoutationHeader_CompanyName" class="column" label="Company Name"
-                                    placeholder="Ex. Aircool JV" size="small"></sl-input>
+                                    placeholder="Ex. Aircool JV" size="small" data-save></sl-input>
                                 <sl-input id="qoutationHeader_CompanyAddress" class="column" label="Company Address"
-                                    placeholder="Ex. Santa Rosa St." size="small"></sl-input>
+                                    placeholder="Ex. Santa Rosa St." size="small" data-save></sl-input>
 
                                 <sl-input id="qoutationHeader_CompanyNumber" class="column" label="Contact Number"
-                                    placeholder="Ex. (123) 456-789" size="small"></sl-input>
+                                    placeholder="Ex. (123) 456-789" size="small" data-save></sl-input>
                                 <sl-input id="qoutationHeader_CompanyEmail" class="column" label="Email Address"
-                                    placeholder="Ex. example@email.com" size="small"></sl-input>
+                                    placeholder="Ex. example@email.com" size="small" data-save></sl-input>
                             </sl-tab-panel>
 
 
@@ -115,15 +116,15 @@ include PROJECT_ROOT . "/Controller/dataRetrieval.php";
                                 <label style="font-weight: 600; font-size: 16px; color: #27BAFD;">Documents
                                     Information Footer</label>
                                 <sl-input id="qoutationFooter_Details1" class="column" label="Warranty Details"
-                                    placeholder="Ex. Repair Warranty" size="small"></sl-input>
+                                    placeholder="Ex. Repair Warranty" size="small" data-save></sl-input>
                                 <sl-input id="qoutationFooter_Details2" class="column" label="Warranty Duration"
-                                    placeholder="Ex. 1 Year upon Completion" size="small"></sl-input>
+                                    placeholder="Ex. 1 Year upon Completion" size="small" data-save></sl-input>
                                 <sl-input id="qoutationFooter_Details3" class="column" label="Quotation Message"
                                     placeholder="Ex. Thank you for letting us submit out quotation."
-                                    size="small"></sl-input>
+                                    size="small" data-save></sl-input>
                                 <sl-input id="qoutationFooter_Details4" class="column" label="Quotation Message"
                                     placeholder="Ex. If you have any concern regarding to this matter, give us a call!"
-                                    size="small"></sl-input>
+                                    size="small" data-save></sl-input>
                             </sl-tab-panel>
 
 
@@ -131,22 +132,23 @@ include PROJECT_ROOT . "/Controller/dataRetrieval.php";
                                 <label style="font-weight: 600; font-size: 16px; color: #27BAFD;">Document
                                     Preparer Information</label>
                                 <sl-input id="qoutationFooter_TechnicianNamePreparer" class="column"
-                                    label="Preparer Name" placeholder="Ex. John Doe" size="small"></sl-input>
+                                    label="Preparer Name" placeholder="Ex. John Doe" size="small" data-save></sl-input>
                                 <sl-input id="qoutationFooter_TechnicianPositionPreparer" class="column"
-                                    label="Preparer Position" placeholder="Ex. Technician" size="small"></sl-input>
+                                    label="Preparer Position" placeholder="Ex. Technician" size="small" data-save></sl-input>
                                 <sl-input id="qoutationFooter_TechnicianNameManager" class="column"
                                     label="Preparer Contact Number" placeholder="Ex. (123) 456-789"
-                                    size="small"></sl-input>
+                                    size="small" data-save></sl-input>
                                 <sl-input id="qoutationFooter_TechnicianPositionManager" class="column"
                                     label="Preparer Email Address" placeholder="Ex. example@email.com"
-                                    size="small"></sl-input>
+                                    size="small" data-save></sl-input>
                             </sl-tab-panel>
 
 
                             <sl-tab-panel name="submitTheData">
-                                <br>
                                 <label style="font-weight: 600; font-size: 16px; color: #27BAFD;">
-                                        Output</label>
+                                    Output</label>
+                                <br>
+                                <br>
                                 <sl-button id="generateQoutation" variant="primary" size="small">Generate</sl-button>
                                 <sl-button variant="primary" size="small"
                                     href="<?= BASE_URL_STYLE ?>/PrintablePage/print-quotation.php">
@@ -160,17 +162,19 @@ include PROJECT_ROOT . "/Controller/dataRetrieval.php";
                                         placeholder="Ex. AirCool Company Settings" size="small"></sl-input>
                                     <sl-select id="settingsLoad" class="column" label="Select Settings to Load"
                                         size="small">
-                                        <sl-option value="">Loading..</sl-option>
+                                        <sl-option value="">None...</sl-option>
                                     </sl-select>
                                     <br>
-                                    <div>
+                                    <sl-button-group label="Alignment">
+                                        <sl-button id="saveSettings" variant="success" size="small"
+                                            outline>Save</sl-button>
                                         <sl-button id="loadSettings" variant="success" size="small"
                                             outline>Load</sl-button>
                                         <sl-button id="updateSettings" variant="warning" size="small"
                                             outline>Update</sl-button>
                                         <sl-button id="deleteSettings" variant="danger" size="small"
                                             outline>Delete</sl-button>
-                                    </div>
+                                    </sl-button-group>
                                 </div>
 
                             </sl-tab-panel>

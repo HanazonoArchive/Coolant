@@ -3,6 +3,7 @@ define('PROJECT_ROOT', $_SERVER['DOCUMENT_ROOT'] . '/Coolant/source-code');
 define('BASE_URL_STYLE', '/Coolant/source-code');
 
 include PROJECT_ROOT . "/Controller/serviceReportController.php";
+include PROJECT_ROOT . "/Controller/dataRetrieval.php";
 ?>
 
 <!DOCTYPE html>
@@ -19,6 +20,8 @@ include PROJECT_ROOT . "/Controller/serviceReportController.php";
 <body>
     <script src="<?= BASE_URL_STYLE ?>/JavaScript/serviceReport/serviceReportFunctions.js"></script>
     <script src="<?= BASE_URL_STYLE ?>/JavaScript/serviceReport/serviceReportTableFunctions.js"></script>
+    <script src="<?= BASE_URL_STYLE ?>/JavaScript/serviceReport/serviceReportSettings.js"></script>
+    <script src="<?= BASE_URL_STYLE ?>/JavaScript/serviceReport/serviceReportLoadCustomer.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <div class="content">
         <div class="topNavigationBar">
@@ -45,7 +48,7 @@ include PROJECT_ROOT . "/Controller/serviceReportController.php";
                             <sl-tab slot="nav" panel="documentTable">Step 4 - Serv. Table</sl-tab>
                             <sl-tab slot="nav" panel="documentInformationFooter">Step 5 - Services Info.</sl-tab>
                             <sl-tab slot="nav" panel="documentPreparerInformation">Step 6 - Technician Info.</sl-tab>
-                            <sl-tab slot="nav" panel="submitTheData">Output</sl-tab>
+                            <sl-tab slot="nav" panel="submitTheData">Output / Load</sl-tab>
 
                             <sl-tab-panel name="employeeSelection">
                                 <label style="font-weight: 600; font-size: 16px; color: #27BAFD;">Select
@@ -61,14 +64,14 @@ include PROJECT_ROOT . "/Controller/serviceReportController.php";
                                 <label style="font-weight: 600; font-size: 16px; color: #27BAFD;">Documents
                                     Header</label>
                                 <sl-input id="serviceReportHeader_CompanyName" class="column" label="Company Name"
-                                    placeholder="Ex. Aircool JV" size="small"></sl-input>
+                                    placeholder="Ex. Aircool JV" size="small" data-save></sl-input>
                                 <sl-input id="serviceReportHeader_CompanyAddress" class="column" label="Company Address"
-                                    placeholder="Ex. Santa Rosa St." size="small"></sl-input>
+                                    placeholder="Ex. Santa Rosa St." size="small" data-save></sl-input>
 
                                 <sl-input id="serviceReportHeader_CompanyNumber" class="column" label="Contact Number"
-                                    placeholder="Ex. (123) 456-789" size="small"></sl-input>
+                                    placeholder="Ex. (123) 456-789" size="small" data-save></sl-input>
                                 <sl-input id="serviceReportHeader_CompanyEmail" class="column" label="Email Address"
-                                    placeholder="Ex. example@email.com" size="small"></sl-input>
+                                    placeholder="Ex. example@email.com" size="small" data-save></sl-input>
                             </sl-tab-panel>
 
 
@@ -96,15 +99,15 @@ include PROJECT_ROOT . "/Controller/serviceReportController.php";
                                 <label style="font-weight: 600; font-size: 16px; color: #27BAFD;">Documents
                                     Service Information</label>
                                 <sl-input id="serviceReportFooter_Complaint" class="column" label="Complaint"
-                                    placeholder="Ex. Not Working Aircon" size="small"></sl-input>
+                                    placeholder="Ex. Not Working Aircon" size="small" data-save></sl-input>
                                 <sl-input id="serviceReportFooter_Diagnosed" class="column" label="Diagnosed"
-                                    placeholder="Ex. Dust Buildup and Repair" size="small"></sl-input>
+                                    placeholder="Ex. Dust Buildup and Repair" size="small" data-save></sl-input>
                                 <sl-input id="serviceReportFooter_ActivityPerformed" class="column" label="Activity Performed"
                                     placeholder="Ex. General Cleaning and Repair"
-                                    size="small"></sl-input>
+                                    size="small" data-save></sl-input>
                                 <sl-input id="serviceReportFooter_Recommendation" class="column" label="Recommendation"
                                     placeholder="Ex. Preventive Maintenance every 6 Months"
-                                    size="small"></sl-input>
+                                    size="small" data-save></sl-input>
                             </sl-tab-panel>
 
 
@@ -112,9 +115,9 @@ include PROJECT_ROOT . "/Controller/serviceReportController.php";
                                 <label style="font-weight: 600; font-size: 16px; color: #27BAFD;">Document
                                     Technician Information</label>
                                 <sl-input id="serviceReportFooter_PreparerName" class="column"
-                                    label="Technician Name" placeholder="Ex. John Doe" size="small"></sl-input>
+                                    label="Technician Name" placeholder="Ex. John Doe" size="small" data-save></sl-input>
                                 <sl-input id="serviceReportFooter_PreparerPosition" class="column"
-                                    label="Position" placeholder="Ex. Technician" size="small"></sl-input>
+                                    label="Position" placeholder="Ex. Technician" size="small" data-save></sl-input>
                                 <sl-input id="serviceReportFooter_ManagerName" class="column"
                                     label="Customer Name" placeholder="Ex. Jane Doe"
                                     size="small"></sl-input>
@@ -122,10 +125,36 @@ include PROJECT_ROOT . "/Controller/serviceReportController.php";
 
 
                             <sl-tab-panel name="submitTheData">
+                                <label style="font-weight: 600; font-size: 16px; color: #27BAFD;">
+                                    Output</label>
+                                <br>
                                 <br>
                                 <sl-button id="generateServiceReport" variant="primary" size="small">Generate</sl-button>
                                 <sl-button variant="primary" size="small" href="<?= BASE_URL_STYLE ?>/PrintablePage/print-serviceReport.php">
                                     Visit Print</sl-button>
+
+                                <div style="width: 300px;display: flex;padding-top: 20px;
+                                flex-direction: column;align-items: stretch;flex-wrap: nowrap;">
+                                    <label style="font-weight: 600; font-size: 16px; color: #27BAFD;">
+                                        Load Created Settings</label>
+                                    <sl-input id="settingName" class="column" label="Settings Name"
+                                        placeholder="Ex. AirCool Company Settings" size="small"></sl-input>
+                                    <sl-select id="settingsLoad" class="column" label="Select Settings to Load"
+                                        size="small">
+                                        <sl-option value="">None...</sl-option>
+                                    </sl-select>
+                                    <br>
+                                    <sl-button-group label="Alignment">
+                                        <sl-button id="saveSettings" variant="success" size="small"
+                                            outline>Save</sl-button>
+                                        <sl-button id="loadSettings" variant="success" size="small"
+                                            outline>Load</sl-button>
+                                        <sl-button id="updateSettings" variant="warning" size="small"
+                                            outline>Update</sl-button>
+                                        <sl-button id="deleteSettings" variant="danger" size="small"
+                                            outline>Delete</sl-button>
+                                    </sl-button-group>
+                                </div>
                             </sl-tab-panel>
 
                             <sl-tab-panel name="documentTable">

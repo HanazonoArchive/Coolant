@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const submitButton = document.getElementById("generateQoutation");
 
-  const fetchData = (url, dropdownId, defaultText) => {
+  const fetchDataAppointment = (url, dropdownId, defaultText) => {
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
@@ -19,10 +19,26 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch((error) => console.error(`Error fetching data from ${url}:`, error));
   };
 
-  fetchData("/Coolant/source-code/Controller/quotationController.php?fetch_appointments=true", "quotationDetails_AppointmentID", "Select Appointment");
-  fetchData("/Coolant/source-code/Controller/quotationController.php?fetch_Employee=true", "quotationDetails_EmployeeID1", "Select Employee - NONE");
-  fetchData("/Coolant/source-code/Controller/quotationController.php?fetch_Employee=true", "quotationDetails_EmployeeID2", "Select Employee - NONE");
-  fetchData("/Coolant/source-code/Controller/quotationController.php?fetch_Employee=true", "quotationDetails_EmployeeID3", "Select Employee - NONE");
+  const fetchDataEmployee = (url, dropdownId, defaultText) => {
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        const dropdown = document.getElementById(dropdownId);
+        dropdown.innerHTML = `<sl-option value=''>${defaultText}</sl-option>`;
+        data.forEach((item) => {
+          const option = document.createElement("sl-option");
+          option.value = item.id;
+          option.textContent = `${item.id} - ${item.name} (${item.role})`;
+          dropdown.appendChild(option);
+        });
+      })
+      .catch((error) => console.error(`Error fetching data from ${url}:`, error));
+  };
+
+  fetchDataAppointment("/Coolant/source-code/Controller/quotationController.php?fetch_appointments=true", "quotationDetails_AppointmentID", "Select Appointment");
+  fetchDataEmployee("/Coolant/source-code/Controller/quotationController.php?fetch_Employee=true", "quotationDetails_EmployeeID1", "Select Employee - NONE");
+  fetchDataEmployee("/Coolant/source-code/Controller/quotationController.php?fetch_Employee=true", "quotationDetails_EmployeeID2", "Select Employee - NONE");
+  fetchDataEmployee("/Coolant/source-code/Controller/quotationController.php?fetch_Employee=true", "quotationDetails_EmployeeID3", "Select Employee - NONE");
 
   submitButton.addEventListener("click", async function () {
     submitButton.setAttribute("loading", true);

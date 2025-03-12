@@ -19,141 +19,110 @@ class ServiceReport
             $stmt1->execute(['appointmentID' => $appointmentID]);
             $quotation = $stmt1->fetch(PDO::FETCH_ASSOC);
 
+            if (!$quotation) {
+                throw new Exception("Quotation not found for this appointment.");
+            }
+
             $quotationID = $quotation['id'];
+
             $stmt2 = $this->conn->prepare("SELECT id FROM service_report WHERE quotation_id = :quotationID LIMIT 1");
             $stmt2->execute(['quotationID' => $quotationID]);
             $serviceReport = $stmt2->fetch(PDO::FETCH_ASSOC);
 
             if ($serviceReport) {
                 throw new Exception("A service report already exists for this appointment.");
-            } else {
-                $stmt3 = $this->conn->prepare("INSERT INTO service_report (quotation_id, amount) VALUES (:quotationID, :totalAmount)");
-                $stmt3->execute(['quotationID' => $quotationID, 'totalAmount' => $totalAmount]);
-                $serviceReportID = $this->conn->lastInsertId();
-
-                $_SESSION['serviceReportID'] = $serviceReportID;
             }
 
+            $stmt3 = $this->conn->prepare("INSERT INTO service_report (quotation_id, amount) VALUES (:quotationID, :totalAmount)");
+            $stmt3->execute(['quotationID' => $quotationID, 'totalAmount' => $totalAmount]);
+            $serviceReportID = $this->conn->lastInsertId();
+            $_SESSION['serviceReportID'] = $serviceReportID;
+
             if ($serviceReportID) {
-                $stmt3 = $this->conn->prepare("SELECT amount FROM service_report WHERE id = :quotationID LIMIT 1");
-                $stmt3->execute(['quotationID' => $quotationID]);
-                $serviceReportAmount = $stmt3->fetch(PDO::FETCH_ASSOC);
+                $stmt4 = $this->conn->prepare("UPDATE appointment SET status = :newStatus WHERE id = :appointmentID");
+                if ($stmt4->execute(['newStatus' => $newStatus, 'appointmentID' => $appointmentID])) {
+                    error_log("Service report created successfully for appointment ID: $appointmentID");
 
-                if ($serviceReportAmount) {
-                    $stmt5 = $this->conn->prepare("UPDATE appointment SET status = :newStatus WHERE id = :appointmentID");
-                    if ($stmt5->execute(['newStatus' => $newStatus, 'appointmentID' => $appointmentID])) {
-                        error_log("Service report created successfully for appointment ID: $appointmentID");
-
-                        if (isset($_SESSION['data_SR'])) {
-                            $data = $_SESSION['data_SR'];
-                            $this->createServiceReportTableData($data);
-                        } else {
-                            throw new Exception("Failed to store data in session.");
-                        }
+                    if (isset($_SESSION['data_SR'])) {
+                        $data = $_SESSION['data_SR'];
+                        $this->createServiceReportTableData($data);
                     } else {
-                        throw new Exception("Failed to update appointment status for appointment ID: $appointmentID");
+                        throw new Exception("Failed to store data in session.");
                     }
                 } else {
-                    throw new Exception("Quotation amount not found for quotation ID: $quotationID");
+                    throw new Exception("Failed to update appointment status.");
                 }
             }
         } catch (Exception $e) {
-            throw new Exception("An error occurred while creating the service report.");
+            throw new Exception("An error occurred while creating the service report: " . $e->getMessage());
         }
     }
 
     public function createServiceReportTableData($data)
     {
         try {
-            sleep(1); // Simulate a delay
             if (!isset($_SESSION['serviceReportID'])) {
                 throw new Exception("Service report ID not found in the session.");
-            } else {
-                $serviceReportID = $_SESSION['serviceReportID'];
             }
-
+            
+            $serviceReportID = $_SESSION['serviceReportID'];
             $jsonData = json_encode($data);
 
-            if ($jsonData) {
-                $stmt1 = $this->conn->prepare("SELECT id FROM service_report_data WHERE service_report_id = :serviceReportID LIMIT 1");
-                $stmt1->execute(['serviceReportID' => $serviceReportID]);
-                $serviceReportData = $stmt1->fetch(PDO::FETCH_ASSOC);
+            $stmt1 = $this->conn->prepare("SELECT id FROM service_report_data WHERE service_report_id = :serviceReportID LIMIT 1");
+            $stmt1->execute(['serviceReportID' => $serviceReportID]);
+            $serviceReportData = $stmt1->fetch(PDO::FETCH_ASSOC);
 
-                if ($serviceReportData) {
-                    $stmt2 = $this->conn->prepare("UPDATE service_report_data SET data = :data WHERE service_report_id = :serviceReportID");
-                    $stmt2->execute(['serviceReportID' => $serviceReportID, 'data' => $jsonData]);
-                } else {
-                    $stmt2 = $this->conn->prepare("INSERT INTO service_report_data (service_report_id, data) VALUES (:serviceReportID, :data)");
-                    $stmt2->execute(['serviceReportID' => $serviceReportID, 'data' => $jsonData]);
-                }
+            if ($serviceReportData) {
+                $stmt2 = $this->conn->prepare("UPDATE service_report_data SET data = :data WHERE service_report_id = :serviceReportID");
             } else {
-                throw new Exception("Failed to insert data for service report ID: $serviceReportID");
+                $stmt2 = $this->conn->prepare("INSERT INTO service_report_data (service_report_id, data) VALUES (:serviceReportID, :data)");
             }
+            $stmt2->execute(['serviceReportID' => $serviceReportID, 'data' => $jsonData]);
         } catch (Exception $e) {
-            throw new Exception("An error occurred while creating the service report table data.");
+            throw new Exception("An error occurred while creating the service report table data: " . $e->getMessage());
         }
     }
 }
 
-// Process the request
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $json = file_get_contents("php://input");
     $data = json_decode($json, true);
 
-    if (isset($data["action"]) && $data["action"] === "serviceReportDATA") {
-        try {
-            $conn = Database::getInstance();
-            $conn->beginTransaction();
+    try {
+        $conn = Database::getInstance();
 
-            $serviceReportHandler = new ServiceReport($conn);
+        if (isset($data["action"])) {
+            if ($data["action"] === "serviceReportTABLE") {
+                $_SESSION['itemsSR'] = $data["items"] ?? [];
+                $_SESSION['data_SR'] = $data;
+                echo json_encode(["status" => "success", "message" => "Quotation items processed successfully", "items" => $_SESSION['itemsSR']]);
+                exit;
+            }
 
-            // Database DATA INFORMATION
-            $appointmentID = trim(string: $data["appointmentID"] ?? "");
-            $totalAmount = trim($data["totalAmount"] ?? "");
-            $newStatus = trim($data["status"] ?? "");
+            if ($data["action"] === "serviceReportDATA") {
+                $conn->beginTransaction();
+                $serviceReportHandler = new ServiceReport($conn);
 
-            $documentData = $data["document"] ?? []; // Get the document data safely
-            $_SESSION['dHeader_SR'] = $documentData["header"] ?? [];
-            $_SESSION['dBody_SR'] = $documentData["body"] ?? [];
-            $_SESSION['dFooter_SR'] = $documentData["footer"] ?? [];
-            $_SESSION['dTechnicianInfo_SR'] = $documentData["technicianInfo"] ?? [];
+                $appointmentID = trim($data["appointmentID"] ?? "");
+                $totalAmount = trim($data["totalAmount"] ?? "");
+                $newStatus = trim($data["status"] ?? "");
 
-            // Call the method with employee IDs dynamically
-            $serviceReportHandler->createServiceReport(
-                $appointmentID,
-                $totalAmount,
-                $newStatus
-            );
+                $_SESSION['dHeader_SR'] = $data["document"]["header"] ?? [];
+                $_SESSION['dBody_SR'] = $data["document"]["body"] ?? [];
+                $_SESSION['dFooter_SR'] = $data["document"]["footer"] ?? [];
+                $_SESSION['dTechnicianInfo_SR'] = $data["document"]["technicianInfo"] ?? [];
 
-            $conn->commit();
-            header('Content-Type: application/json');
-            echo json_encode(["status" => "success", "message" => "Quotation created successfully"]);
-            exit;
-        } catch (Exception $e) {
-            $conn->rollBack();
-            error_log("Transaction failed: " . $e->getMessage());
-            header('Content-Type: application/json');
-            echo json_encode([ "status" => "error", "message" => "Failed to process the request."]);
-            exit;
+                $serviceReportHandler->createServiceReport($appointmentID, $totalAmount, $newStatus);
+                $conn->commit();
+                echo json_encode(["status" => "success", "message" => "Service report created successfully"]);
+                exit;
+            }
         }
-    } elseif (isset($data["action"]) && $data["action"] === "serviceReportTABLE") {
-        try {
-            $conn = Database::getInstance();
-
-            $items = $data["items"] ?? [];
-
-            // Store items separately
-            $_SESSION['itemsSR'] = $items;
-            $_SESSION['data_SR'] = $data;
-
-            header('Content-Type: application/json');
-            echo json_encode(["status" => "success", "message" => "Quotation items processed successfully", "items" => $items]);
-            exit;
-        } catch (Exception $e) {
-            header('Content-Type: application/json');
-            echo json_encode(["status" => "error", "message" => "Failed to process the request."]);
-            exit;
-        }
+    } catch (Exception $e) {
+        $conn->rollBack();
+        error_log("Transaction failed: " . $e->getMessage());
+        echo json_encode(["status" => "error", "message" => "Failed to process the request."]);
+        exit;
     }
 }
 
