@@ -71,10 +71,18 @@ include PROJECT_ROOT . "/Controller/customerController.php";
                             <sl-button id="submitCustomerUpdate" variant="primary" outline>Update</sl-button>
 
                             <sl-button id="updateCustomer_Close" slot="footer" variant="primary">Close</sl-button>
+                            <br>
+                            <br>
+                            <sl-details summary="Help?">
+                                <p style="font-weight: 300; font-size: 16px;"> Select <sl-tag size="small">Customer ID</sl-tag> you want to Update. <br> <br>
+                                <sl-icon name="exclamation-triangle" style="font-size: 16px; color: orange;"></sl-icon> Take Note that if you want to update the you must filled everything, in order for it to update.</p>
+                            </sl-details>
                         </sl-dialog>
 
+                        <sl-tooltip content="Oh... It's Update Customer...">
                         <sl-button id="updateCustomer_Open" size="small" variant="warning" outline>Update
                             Customer</sl-button>
+                        </sl-tooltip>
                     </div>
                     <div class="column">
                         <sl-dialog id="deleteCustomer_Dialog" label="Delete Customer" class="dialog-deny-close">
@@ -89,10 +97,19 @@ include PROJECT_ROOT . "/Controller/customerController.php";
                             <sl-button id="submitCustomerDelete" variant="primary" outline>Delete</sl-button>
 
                             <sl-button id="deleteCustomer_Close" slot="footer" variant="primary">Close</sl-button>
+                            <br>
+                            <br>
+                            <sl-details summary="Help?">
+                                <p style="font-weight: 300; font-size: 16px;"> Select <sl-tag size="small">Customer ID</sl-tag> you want to Delete. <br> <br>
+                                <sl-icon name="exclamation-triangle" style="font-size: 16px; color: orange;"></sl-icon> Take Note that you can't Delete an Customer if has already Appointment. <br> <br>
+                                Only those are no appointment customer can be deleted.</p>
+                            </sl-details>
                         </sl-dialog>
 
+                        <sl-tooltip content="Oh... It's Delete Customer...">
                         <sl-button id="deleteCustomer_Open" size="small" variant="danger" outline>Delete
                             Customer</sl-button>
+                        </sl-tooltip>
                     </div>
                     <div style="padding-left: 30px; padding-right: 10px;">
                         <sl-dialog id="createFeedback_Dialog" label="Create Feedback" class="dialog-deny-close">
@@ -105,12 +122,20 @@ include PROJECT_ROOT . "/Controller/customerController.php";
                                 size="small"></sl-input>
                             <sl-divider></sl-divider>
                             <sl-button id="submitFeedbackAdd" variant="primary" outline>Create</sl-button>
+                            <br>
+                            <br>
+                            <sl-details summary="Help?">
+                                <p style="font-weight: 300; font-size: 16px;">Select <sl-tag size="small">Appointment ID</sl-tag> you want to Add Feedback. <br> <br>
+                                <sl-icon name="exclamation-triangle" style="font-size: 16px; color: orange;"></sl-icon> Take Note that you must filled comment, in order for it to create. Only the Appointment with status of Completed and created a billing statement cant only be used.</p>
+                            </sl-details>
 
                             <sl-button id="createFeedback_Close" slot="footer" variant="primary">Close</sl-button>
                         </sl-dialog>
 
+                        <sl-tooltip content="Yes... It's Create Feedback...">
                         <sl-button id="createFeedback_Open" size="small" variant="success" outline>Create
                             Feedback</sl-button>
+                        </sl-tooltip>
                     </div>
                     <div class="column">
                         <sl-dialog id="updateFeedback_Dialog" label="Update Feedback" class="dialog-deny-close">
@@ -123,12 +148,20 @@ include PROJECT_ROOT . "/Controller/customerController.php";
                                 help-text="New Customer Feedback Comment." size="small"></sl-input>
                             <sl-divider></sl-divider>
                             <sl-button id="submitFeedbackUpdate" variant="primary" outline>Update</sl-button>
+                            <br>
+                            <br>
+                            <sl-details summary="Help?">
+                                <p style="font-weight: 300; font-size: 16px;">Select <sl-tag size="small">Feedback ID</sl-tag> you want to Update. <br> <br>
+                                <sl-icon name="exclamation-triangle" style="font-size: 16px; color: orange;"></sl-icon> Take Note that you need to input the new comment to be updated.</p>
+                            </sl-details>
 
                             <sl-button id="updateFeedback_Close" slot="footer" variant="primary">Close</sl-button>
                         </sl-dialog>
 
+                        <sl-tooltip content="Oh... It's Update Feedback...">
                         <sl-button id="updateFeedback_Open" size="small" variant="warning" outline>Update
                             Feedback</sl-button>
+                        </sl-tooltip>
                     </div>
                     <div class="column">
                         <sl-dialog id="deleteFeedback_Dialog" label="Delete Feedback" class="dialog-deny-close">
@@ -141,12 +174,19 @@ include PROJECT_ROOT . "/Controller/customerController.php";
                                 help-text='Type "DELETE" to cofirm deletion' size="small"></sl-input>
                             <sl-divider></sl-divider>
                             <sl-button id="submitFeedbackDelete" variant="primary" outline>Delete</sl-button>
+                            <br>
+                            <br>
+                            <sl-details summary="Help?">
+                                <p style="font-weight: 300; font-size: 16px;">Select <sl-tag size="small">Feedback ID</sl-tag> you want to Delete.</p>
+                            </sl-details>
 
                             <sl-button id="deleteFeedback_Close" slot="footer" variant="primary">Close</sl-button>
                         </sl-dialog>
 
+                        <sl-tooltip content="Oh... It's Delete Feedback...">
                         <sl-button id="deleteFeedback_Open" size="small" variant="danger" outline>Delete
                             Feedback</sl-button>
+                        </sl-tooltip>
                     </div>
                 </div>
             </div>

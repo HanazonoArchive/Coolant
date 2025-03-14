@@ -8,9 +8,13 @@ function updateEmployeeStats() {
         .then(response => response.json())
         .then(data => {
             if (!data.error) {
-                const percentage = (data.availableEmployees / data.totalEmployees) * 100;
-                document.getElementById("employeeCount").textContent = `${data.availableEmployees}/${data.totalEmployees}`;
-                document.getElementById("employeeProgress").style.background = `conic-gradient(var(--optional-color) ${percentage}%, #ddd ${percentage}%)`;
+                const available = data.availableEmployees ?? 0;
+                const total = data.totalEmployees ?? 0;
+                const percentage = total > 0 ? ((available / total) * 100).toFixed(1) : 0;
+
+                const progressRing = document.getElementById("employeeProgress");
+                progressRing.value = percentage;
+                progressRing.textContent = `${available}/${total}`;
             }
         })
         .catch(error => console.error("Error fetching employee stats:", error));
@@ -21,9 +25,13 @@ function updateAppointmentStats() {
         .then(response => response.json())
         .then(data => {
             if (!data.error) {
-                const percentage = (data.completedAppointments / data.totalAppointments) * 100;
-                document.getElementById("appointmentCount").textContent = `${data.completedAppointments}/${data.totalAppointments}`;
-                document.getElementById("appointmentProgress").style.background = `conic-gradient(var(--optional-color) ${percentage}%, #ddd ${percentage}%)`;
+                const completed = data.completedAppointments ?? 0;
+                const total = data.totalAppointments ?? 0;
+                const percentage = total > 0 ? ((completed / total) * 100).toFixed(1) : 0;
+
+                const progressRing = document.getElementById("appointmentProgress");
+                progressRing.value = percentage;
+                progressRing.textContent = `${completed}/${total}`;
             }
         })
         .catch(error => console.error("Error fetching appointment stats:", error));

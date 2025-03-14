@@ -116,10 +116,13 @@ include PROJECT_ROOT . "/Controller/dataRetrieval.php";
                                     Output</label>
                                 <br>
                                 <br>
+                                <sl-tooltip content="Generate a Customer Billing Statement" placement="top">
                                 <sl-button id="generateBillingReport" variant="primary" size="small">Generate</sl-button>
+                                </sl-tooltip>
+                                <sl-tooltip content="When Generate Customer Billing Statement is done, 'Click' this to redirect to Printable Page" placement="right">
                                 <sl-button variant="primary" size="small" href="<?= BASE_URL_STYLE ?>/PrintablePage/print-billingStatement.php">
                                     Visit Print</sl-button>
-
+                                </sl-tooltip>
 
                                 <div style="width: 300px;display: flex;padding-top: 20px;
                                 flex-direction: column;align-items: stretch;flex-wrap: nowrap;">
@@ -143,6 +146,20 @@ include PROJECT_ROOT . "/Controller/dataRetrieval.php";
                                             outline>Delete</sl-button>
                                     </sl-button-group>
                                 </div>
+                                <br> <br>
+                                    <sl-details summary="Help?">
+                                        <p style="font-weight: 300; font-size: 16px;"><sl-tag size="small">Billing Statement</sl-tag> Page, is where you can generate a Billing Statement by filling those information. <br><br>
+                                        In the <sl-tag variant="primary" size="small">Ouput</sl-tag> There's <sl-tag size="small">2</sl-tag> Button <sl-tag variant="primary" size="small">Gemerate</sl-tag> and <sl-tag variant="primary" size="small">Visit Print</sl-tag>. <br> <br>
+                                        What <sl-tag variant="primary" size="small">Generate</sl-tag> do is take all the input from <sl-tag size="small">Step 1</sl-tag> to <sl-tag size="small">Step 5</sl-tag>, and send it to the Database to Stored at the same time,
+                                        a copy of it, will be sent to <sl-tag variant="primary" size="small">Visit Print</sl-tag> to be displayed and print. <br> <br>
+
+                                        <sl-icon name="exclamation-triangle" style="font-size: 16px; color: orange;"></sl-icon> Take Note that any if you click <sl-tag variant="primary" size="small">Visit Print</sl-tag> before <sl-tag variant="primary" size="small">Gemerate</sl-tag>, it will display the previous <sl-tag size="small">Billing Statement</sl-tag>.
+                                        </p>
+                                        <sl-divider></sl-divider>
+                                        <p style="font-weight: 300; font-size: 16px;">In the <sl-tag size="small" variant="primary">Load Created Settings</sl-tag> Section, you can save the current settings you have, and load it back when you need it. <br> <br>
+                                        So what this Load Created Settings do?.. It take the current input and save in the local Storage, where you can load it back, this is to prevent repeative input of the same information. <br> <br>
+                                        </p>
+                                    </sl-details>
                             </sl-tab-panel>
 
                             <sl-tab-panel name="collectionStatement">
@@ -164,6 +181,12 @@ include PROJECT_ROOT . "/Controller/dataRetrieval.php";
                                     $appointmentManager->fetchPendingCollection();
                                     ?>
                                 </div>
+                                <br><br>
+                                <sl-details summary="Help?">
+                                <p style="font-weight: 300; font-size: 16px;"> Select <sl-tag size="small">Collection ID</sl-tag> you want to set either <sl-tag size="small">Paid</sl-tag> or <sl-tag size="small">Unpaid</sl-tag> . <br> <br>
+                                <sl-icon name="exclamation-triangle" style="font-size: 16px; color: orange;"></sl-icon> Take Note that you can't set an Appointment if it haven't created a <sl-tag size="small">Billing Statement</sl-tag>. <br> <br>
+                                Only those are on <sl-tag size="small" variant="success">Completed</sl-tag> status.</p>
+                            </sl-details>
                             </sl-tab-panel>
 
                         </sl-tab-group>

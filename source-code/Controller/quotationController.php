@@ -12,7 +12,7 @@ class Quotation
         $this->conn = $db;
     }
 
-    public function createQuotation($employees, $appointmentID, $totalAmount, $newStatus)
+    public function createQuotation($employeeID1, $employeeID2, $employeeID3, $appointmentID, $totalAmount, $newStatus)
     {
         try {
             $stmt1 = $this->conn->prepare("SELECT id FROM quotation WHERE appointment_id = :appointmentID LIMIT 1");
@@ -21,21 +21,34 @@ class Quotation
 
             if ($quotation) {
                 throw new Exception("[quotationController]: Quotation already exists for this appointment");
+            } else {
+                $stmt2 = $this->conn->prepare("INSERT INTO quotation (appointment_id, amount) VALUES (:appointmentID, :totalAmount)");
+                $stmt2->execute(['appointmentID' => $appointmentID, 'totalAmount' => $totalAmount]);
+                $quotationID = $this->conn->lastInsertId();
+
+                $_SESSION['quotationID_QUO'] = $quotationID;
             }
 
-            $stmt2 = $this->conn->prepare("INSERT INTO quotation (appointment_id, amount) VALUES (:appointmentID, :totalAmount)");
-            $stmt2->execute(['appointmentID' => $appointmentID, 'totalAmount' => $totalAmount]);
-            $quotationID = $this->conn->lastInsertId();
-            $_SESSION['quotationID_QUO'] = $quotationID;
-
-            $stmt3 = $this->conn->prepare("UPDATE appointment SET status = :newStatus WHERE id = :appointmentID");
-            $stmt3->execute(['newStatus' => $newStatus, 'appointmentID' => $appointmentID]);
-
-            if (isset($_SESSION['data_QUO'])) {
-                $this->createQuotationTableData($_SESSION['data_QUO']);
-                $this->logEmployees($employees, $appointmentID);
+            if (isset($quotationID) && $quotationID) {
+                $stmt3 = $this->conn->prepare("UPDATE appointment SET status = :newStatus WHERE id = :appointmentID");
+                $stmt3->execute(['newStatus' => $newStatus, 'appointmentID' => $appointmentID]);
             } else {
-                throw new Exception("[quotationController]: Data not found");
+                throw new Exception("[quotationController]: An error occurred while creating Quotation - Quotation ID not found");
+            }
+
+            $stmt4 = $this->conn->prepare("INSERT INTO employee_log (employee_id, appointment_id) VALUES (:employee_id, :appointment_id)");
+            $uniqueEmployees = array_unique([$employeeID1, $employeeID2, $employeeID3]);
+
+            foreach ($uniqueEmployees as $employeeID) {
+                $stmtCheck = $this->conn->prepare("SELECT COUNT(*) FROM employee_log WHERE employee_id = :employee_id AND appointment_id = :appointment_id");
+                $stmtCheck->execute(['employee_id' => $employeeID, 'appointment_id' => $appointmentID]);
+                $exist = $stmtCheck->fetchColumn();
+
+                if ($exist == 0) {
+                    $stmt4->execute(['employee_id' => $employeeID, 'appointment_id' => $appointmentID]);
+                } else {
+                    throw new Exception("[quotationController]: Employee already assigned to this appointment");
+                }
             }
             return true;
         } catch (Exception $e) {
@@ -44,42 +57,36 @@ class Quotation
         }
     }
 
-    private function createQuotationTableData($data)
+    public function createQuotationTableData($data)
     {
         try {
-            $quotationID = $_SESSION['quotationID_QUO'] ?? null;
+            $quotationID = $_SESSION['quotationID_QUO'];
+
             if (!$quotationID) {
                 throw new Exception("[quotationController]: Quotation ID not found");
+            } else {
+                $stmt1 = $this->conn->prepare("SELECT id FROM quotation_data WHERE quotation_id = :id LIMIT 1");
+                $stmt1->execute(['id' => $quotationID]);
+                $quotationDataID = $stmt1->fetch(PDO::FETCH_ASSOC);
             }
 
-            $stmt1 = $this->conn->prepare("SELECT id FROM quotation_data WHERE quotation_id = :id LIMIT 1");
-            $stmt1->execute(['id' => $quotationID]);
-            if ($stmt1->fetch(PDO::FETCH_ASSOC)) {
-                throw new Exception("[quotationController]: Quotation Data already exists");
-            }
+            if ($quotationDataID !== false) {
+                throw new Exception("[quotationController]: Quotation Data already exists for this Quotation");
+            } else {
+                $data_encoded = json_encode($data);
+                $stmt2 = $this->conn->prepare("INSERT INTO quotation_data (quotation_id, data) VALUES (:quotationID, :jsonData)");
+                $stmt2->execute(['quotationID' => $quotationID, 'jsonData' => $data_encoded]);
+                $stmt2Check = $stmt2->rowCount() > 0;
 
-            $stmt2 = $this->conn->prepare("INSERT INTO quotation_data (quotation_id, data) VALUES (:quotationID, :jsonData)");
-            $stmt2->execute(['quotationID' => $quotationID, 'jsonData' => json_encode($data)]);
-        } catch (Exception $e) {
-            error_log("Error creating Quotation Data: " . $e->getMessage());
-            throw new Exception("[quotationController]: An error occurred while creating Quotation Data");
-        }
-    }
-
-    private function logEmployees($employees, $appointmentID)
-    {
-        try {
-            $stmt = $this->conn->prepare("INSERT INTO employee_log (employee_id, appointment_id) VALUES (:employee_id, :appointment_id)");
-            foreach (array_unique($employees) as $employeeID) {
-                $stmtCheck = $this->conn->prepare("SELECT COUNT(*) FROM employee_log WHERE employee_id = :employee_id AND appointment_id = :appointment_id");
-                $stmtCheck->execute(['employee_id' => $employeeID, 'appointment_id' => $appointmentID]);
-                if ($stmtCheck->fetchColumn() == 0) {
-                    $stmt->execute(['employee_id' => $employeeID, 'appointment_id' => $appointmentID]);
+                if ($stmt2Check) {
+                    return true;
+                } else {
+                    throw new Exception("[quotationController]: An error occurred while creating Quotation Data");
                 }
             }
         } catch (Exception $e) {
-            error_log("Error logging employees: " . $e->getMessage());
-            throw new Exception("[quotationController]: An error occurred while logging employees");
+            error_log("Error creating Quotation Data: " . $e->getMessage());
+            throw new Exception("[quotationController]: An error occurred while creating Quotation Data");
         }
     }
 }
@@ -88,55 +95,99 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $json = file_get_contents('php://input');
     $data = json_decode($json, true);
 
-    try {
-        $conn = Database::getInstance();
-
-        if ($data["action"] === "quotationDATA") {
+    if (isset($data["action"]) && $data["action"] === "quotationDATA") {
+        try {
+            $conn = Database::getInstance();
             $conn->beginTransaction();
+
             $quotationHandler = new Quotation($conn);
 
-            $_SESSION['dHeader'] = $data['document']['header'];
-            $_SESSION['dBody'] = $data['document']['body'];
-            $_SESSION['dFooter'] = $data['document']['footer'];
-            $_SESSION['dTechnicianInfo'] = $data['document']['technicianInfo'];
+            // Database DATA INFORMATION
+            $appointmentID = $data['appointmentID'];
+            $employees = $data['employees'];
+            $totalAmount = $data['totalAmount'];
+            $newStatus = $data['status'];
 
-            if (empty($data['employees'])) {
+            $documentData = $data['document'];
+            $_SESSION['dHeader'] = $documentData['header'];
+            $_SESSION['dBody'] = $documentData['body'];
+            $_SESSION['dFooter'] = $documentData['footer'];
+            $_SESSION['dTechnicianInfo'] = $documentData['technicianInfo'];
+
+            if (empty($employees)) {
                 throw new Exception("[quotationController]: Employees not found");
             }
 
             $quotationHandler->createQuotation(
-                $data['employees'],
-                $data['appointmentID'],
-                $data['totalAmount'],
-                $data['status']
+                $employees[0],
+                $employees[1],
+                $employees[2],
+                $appointmentID,
+                $totalAmount,
+                $newStatus
             );
+
             $conn->commit();
+            header('Content-Type: application/json');
             echo json_encode(["status" => "success", "message" => "Quotation created successfully"]);
             exit;
-        }
-
-        if ($data["action"] === "quotationTABLE") {
-            $_SESSION['items'] = $data["items"];
-            $_SESSION['data_QUO'] = $data;
-            echo json_encode(["status" => "success", "message" => "Quotation items processed successfully", "items" => $data["items"]]);
+        } catch (Exception $e) {
+            $conn->rollBack();
+            error_log("Error creating Quotation: " . $e->getMessage());
+            header('Content-Type: application/json');
+            echo json_encode(["status" => "error", "message" => "An error occurred while creating Quotation"]);
             exit;
         }
-
-        if ($data["action"] === "cancel") {
+    } elseif (isset($data["action"]) && $data["action"] === "quotationTABLE") {
+        try {
+            $conn = Database::getInstance();
             $conn->beginTransaction();
-            $stmt = $conn->prepare("UPDATE appointment SET status = 'Cancelled' WHERE id = :appointmentID");
-            $stmt->execute(['appointmentID' => $data['appointment_ID']]);
+
+            $quotationHandler = new Quotation($conn);
+
+            $items = $data["items"];
+
+            $_SESSION['items'] = $items;
+            $_SESSION['data_QUO'] = $data;
+
+            if (isset($data)) {
+                $quotationHandler->createQuotationTableData($data);
+            } else {
+                throw new Exception("[quotationTable]: An error occurred while creating Quotation - Data not found");
+            }
+
             $conn->commit();
+            header('Content-Type: application/json');
+            echo json_encode(["status" => "success", "message" => "Quotation items processed successfully", "items" => $items]);
+            exit;
+        } catch (Exception $e) {
+            $conn->rollBack();
+            error_log("Error creating Quotation Table Data: " . $e->getMessage());
+            header('Content-Type: application/json');
+            echo json_encode(["status" => "error", "message" => "An error occurred while creating Quotation Table Data"]);
+            exit;
+        }
+    } elseif (isset($data["action"]) && $data["action"] === "cancel") {
+        try {
+            $conn = Database::getInstance();
+            $conn->beginTransaction();
+
+            $appointmentID = $data['appointment_ID'];
+
+            $stmt = $conn->prepare("UPDATE appointment SET status = 'Cancelled' WHERE id = :appointmentID");
+            $stmt->execute(['appointmentID' => $appointmentID]);
+
+            $conn->commit();
+            header('Content-Type: application/json');
             echo json_encode(["status" => "success", "message" => "Quotation cancelled successfully"]);
             exit;
-        }
-    } catch (Exception $e) {
-        if ($conn->inTransaction()) {
+        } catch (Exception $e) {
             $conn->rollBack();
+            error_log("Error cancelling Quotation: " . $e->getMessage());
+            header('Content-Type: application/json');
+            echo json_encode(["status" => "error", "message" => "An error occurred while cancelling Quotation"]);
+            exit;
         }
-        error_log("Error: " . $e->getMessage());
-        echo json_encode(["status" => "error", "message" => $e->getMessage()]);
-        exit;
     }
 }
 

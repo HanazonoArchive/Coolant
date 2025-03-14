@@ -1,6 +1,6 @@
 <?php
-define('PROJECT', $_SERVER['DOCUMENT_ROOT'] . '/CSE7PHPWebsite/public');
-include PROJECT . "/db/DBConnection.php";
+define('PROJECT', $_SERVER['DOCUMENT_ROOT'] . '/Coolant/source-code');
+include PROJECT . "/Database/DBConnection.php";
 
 class EmployeeLogManager
 {

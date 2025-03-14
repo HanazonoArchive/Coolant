@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const loadButton = document.getElementById("loadCustomerInformation");
 
   loadButton.addEventListener("click", function () {
+    loadButton.setAttribute("loading", true);
     const requestData = {
       action: "serviceReportLoadCustomer",
       appointmentID: appointmentID.value,
@@ -31,11 +32,17 @@ document.addEventListener("DOMContentLoaded", function () {
           customerName.value = result.name || "";
           customerAddress.value = result.address || "";
           footerCustomerName.value = result.name || "";
+          loadButton.removeAttribute("loading");
+          loadButton.setAttribute("variant", "success");
         } else {
           console.error("Error retrieving data:", result.message);
+          loadButton.removeAttribute("loading");
+          loadButton.setAttribute("variant", "warning");
         }
       } catch (error) {
         console.error("Error sending data:", error);
+        loadButton.removeAttribute("loading");
+        loadButton.setAttribute("variant", "danger");
       }
     }
   });

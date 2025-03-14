@@ -106,8 +106,10 @@ include PROJECT_ROOT . "/Controller/dataRetrieval.php";
                                 flex-direction: column; flex-wrap: nowrap;">
                                     <label>Load Customer Information</label>
                                     <br>
-                                    <sl-button id="loadCustomerInformation" variant="primary"
-                                        size="small">Load</sl-button>
+                                    <sl-tooltip content="Load the Customer Information using the Appointment ID" placement="right">
+                                        <sl-button id="loadCustomerInformation" variant="primary"
+                                            size="small">Load</sl-button>
+                                    </sl-tooltip>
                                 </div>
                             </sl-tab-panel>
 
@@ -149,10 +151,14 @@ include PROJECT_ROOT . "/Controller/dataRetrieval.php";
                                     Output</label>
                                 <br>
                                 <br>
-                                <sl-button id="generateQoutation" variant="primary" size="small">Generate</sl-button>
-                                <sl-button variant="primary" size="small"
-                                    href="<?= BASE_URL_STYLE ?>/PrintablePage/print-quotation.php">
-                                    Visit Print</sl-button>
+                                <sl-tooltip content="Generate a Customer Quotation" placement="top">
+                                    <sl-button id="generateQoutation" variant="primary" size="small">Generate</sl-button>
+                                </sl-tooltip>
+                                <sl-tooltip content="When Generate Quotation is done, 'Click' this to redirect to Printable Page" placement="right">
+                                    <sl-button variant="primary" size="small"
+                                        href="<?= BASE_URL_STYLE ?>/PrintablePage/print-quotation.php">
+                                        Visit Print</sl-button>
+                                </sl-tooltip>
 
                                 <div style="width: 300px;display: flex;padding-top: 20px;
                                 flex-direction: column;align-items: stretch;flex-wrap: nowrap;">
@@ -176,6 +182,20 @@ include PROJECT_ROOT . "/Controller/dataRetrieval.php";
                                             outline>Delete</sl-button>
                                     </sl-button-group>
                                 </div>
+                                <br> <br>
+                                    <sl-details summary="Help?">
+                                        <p style="font-weight: 300; font-size: 16px;"><sl-tag size="small">Quotation</sl-tag> Page, is where you can generate a Quotation by filling those information. <br><br>
+                                        In the <sl-tag variant="primary" size="small">Ouput</sl-tag> There's <sl-tag size="small">2</sl-tag> Button <sl-tag variant="primary" size="small">Gemerate</sl-tag> and <sl-tag variant="primary" size="small">Visit Print</sl-tag>. <br> <br>
+                                        What <sl-tag variant="primary" size="small">Generate</sl-tag> do is take all the input from <sl-tag size="small">Step 1</sl-tag> to <sl-tag size="small">Step 6</sl-tag>, and send it to the Database to Stored at the same time,
+                                        a copy of it, will be sent to <sl-tag variant="primary" size="small">Visit Print</sl-tag> to be displayed and print. <br> <br>
+
+                                        <sl-icon name="exclamation-triangle" style="font-size: 16px; color: orange;"></sl-icon> Take Note that any if you click <sl-tag variant="primary" size="small">Visit Print</sl-tag> before <sl-tag variant="primary" size="small">Gemerate</sl-tag>, it will display the previous <sl-tag size="small">Quotation</sl-tag>.
+                                        </p>
+                                        <sl-divider></sl-divider>
+                                        <p style="font-weight: 300; font-size: 16px;">In the <sl-tag size="small" variant="primary">Load Created Settings</sl-tag> Section, you can save the current settings you have, and load it back when you need it. <br> <br>
+                                        So what this Load Created Settings do?.. It take the current input and save in the local Storage, where you can load it back, this is to prevent repeative input of the same information. <br> <br>
+                                        </p>
+                                    </sl-details>
 
                             </sl-tab-panel>
 
@@ -188,6 +208,13 @@ include PROJECT_ROOT . "/Controller/dataRetrieval.php";
                                 <br>
                                 <sl-button id="submitCancelAppointment" variant="primary"
                                     size="small">Cancel</sl-button>
+                                    <br> <br>
+                                    <sl-details summary="Help?">
+                                        <p style="font-weight: 300; font-size: 16px;"><sl-tag size="small">Cancel</sl-tag> Page, is where you can Cancel the Appointment. <br><br>
+                                        In the <sl-tag variant="primary" size="small">Cancel</sl-tag> Section, you can select the Appointment you want to Cancel, and click the <sl-tag variant="primary" size="small">Cancel</sl-tag> Button to Cancel the Appointment. <br> <br>
+                                        <sl-icon name="exclamation-triangle" style="font-size: 16px; color: orange;"></sl-icon> Take Note that once you click the <sl-tag variant="primary" size="small">Cancel</sl-tag> Button, it will be removed from the label as <sl-tag variant="danger" size="small">Cancel</sl-tag>, and you can't undo it.
+                                        </p>
+                                    </sl-details>
                             </sl-tab-panel>
 
                             <sl-tab-panel name="documentTable">

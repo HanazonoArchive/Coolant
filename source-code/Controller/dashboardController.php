@@ -1,6 +1,6 @@
 <?php
-define('PROJECT_ROOT_DB', $_SERVER['DOCUMENT_ROOT'] . '/CSE7PHPWebsite/public');
-include PROJECT_ROOT_DB . "/db/DBConnection.php";
+define('PROJECT_ROOT_DB', $_SERVER['DOCUMENT_ROOT'] . '/Coolant/source-code');
+include PROJECT_ROOT_DB . "/Database/DBConnection.php";
 
 class ScheduleManager
 {

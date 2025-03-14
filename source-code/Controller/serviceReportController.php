@@ -1,7 +1,7 @@
 <?php
 session_start();
-define('PROJECT_DB', $_SERVER['DOCUMENT_ROOT'] . '/CSE7PHPWebsite/public/');
-include_once PROJECT_DB . "db/DBConnection.php";
+define('PROJECT_DB', $_SERVER['DOCUMENT_ROOT'] . '/Coolant/source-code');
+include_once PROJECT_DB . "/Database/DBConnection.php";
 
 class ServiceReport
 {
@@ -42,13 +42,6 @@ class ServiceReport
                 $stmt4 = $this->conn->prepare("UPDATE appointment SET status = :newStatus WHERE id = :appointmentID");
                 if ($stmt4->execute(['newStatus' => $newStatus, 'appointmentID' => $appointmentID])) {
                     error_log("Service report created successfully for appointment ID: $appointmentID");
-
-                    if (isset($_SESSION['data_SR'])) {
-                        $data = $_SESSION['data_SR'];
-                        $this->createServiceReportTableData($data);
-                    } else {
-                        throw new Exception("Failed to store data in session.");
-                    }
                 } else {
                     throw new Exception("Failed to update appointment status.");
                 }
@@ -64,7 +57,7 @@ class ServiceReport
             if (!isset($_SESSION['serviceReportID'])) {
                 throw new Exception("Service report ID not found in the session.");
             }
-            
+
             $serviceReportID = $_SESSION['serviceReportID'];
             $jsonData = json_encode($data);
 
@@ -84,45 +77,76 @@ class ServiceReport
     }
 }
 
+// Process the request
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $json = file_get_contents("php://input");
     $data = json_decode($json, true);
 
-    try {
-        $conn = Database::getInstance();
+    if (isset($data["action"]) && $data["action"] === "serviceReportDATA") {
+        try {
+            $conn = Database::getInstance();
+            $conn->beginTransaction();
 
-        if (isset($data["action"])) {
-            if ($data["action"] === "serviceReportTABLE") {
-                $_SESSION['itemsSR'] = $data["items"] ?? [];
-                $_SESSION['data_SR'] = $data;
-                echo json_encode(["status" => "success", "message" => "Quotation items processed successfully", "items" => $_SESSION['itemsSR']]);
-                exit;
-            }
+            $serviceReportHandler = new ServiceReport($conn);
 
-            if ($data["action"] === "serviceReportDATA") {
-                $conn->beginTransaction();
-                $serviceReportHandler = new ServiceReport($conn);
+            // Database DATA INFORMATION
+            $appointmentID = trim(string: $data["appointmentID"] ?? "");
+            $totalAmount = trim($data["totalAmount"] ?? "");
+            $newStatus = trim($data["status"] ?? "");
 
-                $appointmentID = trim($data["appointmentID"] ?? "");
-                $totalAmount = trim($data["totalAmount"] ?? "");
-                $newStatus = trim($data["status"] ?? "");
+            $documentData = $data["document"] ?? []; // Get the document data safely
+            $_SESSION['dHeader_SR'] = $documentData["header"] ?? [];
+            $_SESSION['dBody_SR'] = $documentData["body"] ?? [];
+            $_SESSION['dFooter_SR'] = $documentData["footer"] ?? [];
+            $_SESSION['dTechnicianInfo_SR'] = $documentData["technicianInfo"] ?? [];
 
-                $_SESSION['dHeader_SR'] = $data["document"]["header"] ?? [];
-                $_SESSION['dBody_SR'] = $data["document"]["body"] ?? [];
-                $_SESSION['dFooter_SR'] = $data["document"]["footer"] ?? [];
-                $_SESSION['dTechnicianInfo_SR'] = $data["document"]["technicianInfo"] ?? [];
+            // Call the method with employee IDs dynamically
+            $serviceReportHandler->createServiceReport(
+                $appointmentID,
+                $totalAmount,
+                $newStatus
+            );
 
-                $serviceReportHandler->createServiceReport($appointmentID, $totalAmount, $newStatus);
-                $conn->commit();
-                echo json_encode(["status" => "success", "message" => "Service report created successfully"]);
-                exit;
-            }
+            $conn->commit();
+            header('Content-Type: application/json');
+            echo json_encode(["status" => "success", "message" => "Quotation created successfully"]);
+            exit;
+        } catch (Exception $e) {
+            $conn->rollBack();
+            error_log("Transaction failed: " . $e->getMessage());
+            header('Content-Type: application/json');
+            echo json_encode(["status" => "error", "message" => "Failed to process the request."]);
+            exit;
         }
-    } catch (Exception $e) {
-        $conn->rollBack();
-        error_log("Transaction failed: " . $e->getMessage());
-        echo json_encode(["status" => "error", "message" => "Failed to process the request."]);
-        exit;
+    } elseif (isset($data["action"]) && $data["action"] === "serviceReportTABLE") {
+        try {
+            $conn = Database::getInstance();
+            $conn->beginTransaction();
+
+            $serviceReportHandler = new ServiceReport($conn);
+
+            $items = $data["items"] ?? [];
+
+            // Store items separately
+            $_SESSION['itemsSR'] = $items;
+            $_SESSION['data_SR'] = $data;
+
+            if (isset($data)) {
+                $serviceReportHandler->createServiceReportTableData($data);
+            } else {
+                throw new Exception("Failed to store data in session.");
+            }
+
+            $conn->commit();
+            header('Content-Type: application/json');
+            echo json_encode(["status" => "success", "message" => "Quotation items processed successfully", "items" => $items]);
+            exit;
+        } catch (Exception $e) {
+            $conn->rollBack();
+            header('Content-Type: application/json');
+            echo json_encode(["status" => "error", "message" => "Failed to process the request."]);
+            exit;
+        }
     }
 }
 

@@ -14,8 +14,9 @@ class Customer
     public function findOrCreateCustomer($name, $contact_number, $address)
     {
         try {
-            $stmt = $this->conn->prepare("SELECT id FROM customer WHERE name = :name AND address = :address AND contact_number = :contact_number LIMIT 1");
-            $stmt->execute(['name' => $name, 'address' => $address, 'contact_number' => $contact_number]);
+            // Check if the customer exists based on name and contact number only
+            $stmt = $this->conn->prepare("SELECT id FROM customer WHERE name = :name AND contact_number = :contact_number LIMIT 1");
+            $stmt->execute(['name' => $name, 'contact_number' => $contact_number]);
             $customer = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($customer) {
@@ -171,7 +172,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (!empty($appointmentID)) {
                 $appointmentHandler->deleteAppointment($appointmentID);
             }
-            
+
             $conn->commit();
             header('Content-Type: application/json');
             echo json_encode(["status" => "success", "message" => "Update successful"]);
@@ -262,4 +263,3 @@ if (isset($_GET['fetch_appointments'])) {
 // Initialize database connection
 $conn = Database::getInstance();
 $appointmentManager = new AppointmentManager($conn);
-?>

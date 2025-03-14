@@ -63,11 +63,23 @@ include PROJECT_ROOT . "/Controller/appointmentController.php";
                             </sl-select>
                             <sl-divider></sl-divider>
                             <sl-button id="submitCreateAppointment" variant="primary" outline>Submit</sl-button>
+                            <br>
+                            <br>
+                            <sl-details summary="Help?">
+                                <p style="font-weight: 300; font-size: 16px;"> Type in Customer <sl-tag size="small">Name</sl-tag>, <sl-tag size="small">Contact Number</sl-tag>, 
+                                <sl-tag size="small">Address</sl-tag>, <sl-tag size="small">Date</sl-tag>, <sl-tag size="small">Category</sl-tag> and <sl-tag size="small">Priority</sl-tag> of the Appointment. <br> <br>
+
+                                We have <sl-tag size="small">3</sl-tag> Category you choose from <sl-tag size="small">Installation</sl-tag>, <sl-tag size="small">Repair</sl-tag>, and <sl-tag size="small">Maintenance</sl-tag>. <br> <br>
+
+                                Now for the <sl-tag size="small">Priority</sl-tag>, We have <sl-tag size="small" variant="success">Low</sl-tag>, <sl-tag size="small" variant="primary">Medium</sl-tag>, <sl-tag size="small" variant="warning">High</sl-tag>, and <sl-tag size="small" variant="danger">Urgent</sl-tag>. <br> <br>
+                                </p>
+                            </sl-details>
 
                             <sl-button id="createAppointment_Close" slot="footer" variant="primary">Close</sl-button>
                         </sl-dialog>
-
-                        <sl-button id="createAppointment_Open" variant="success" outline size="small">Create Appointment</sl-button>
+                        <sl-tooltip content="Yes... It's Create Appointment...">
+                            <sl-button id="createAppointment_Open" variant="success" outline size="small">Create Appointment</sl-button>
+                        </sl-tooltip>
                     </div>
                     <div class="column">
                         <sl-dialog id="updateAppointment_Dialog" label="Update Appointment" class="dialog-deny-close">
@@ -91,11 +103,19 @@ include PROJECT_ROOT . "/Controller/appointmentController.php";
                             <sl-input id="appointmentUpdate_Date" config-id="date" label="Date" help-text="Update the Appointment Date" size="small"></sl-input>
                             <sl-divider></sl-divider>
                             <sl-button id="submitUpdateAppointment" variant="primary" outline>Submit</sl-button>
+                            <br>
+                            <br>
+                            <sl-details summary="Help?">
+                                <p style="font-weight: 300; font-size: 16px;"> Select <sl-tag size="small">Appointment ID</sl-tag> you want to Update. <br> <br>
+                                <sl-icon name="exclamation-triangle" style="font-size: 16px; color: orange;"></sl-icon> Take Note that you can't Update an Appointment that is already <sl-tag size="small" variant="primary">Working</sl-tag> or <sl-tag size="small" variant="success">Completed</sl-tag>. <br> <br>
+                                Only those are on <sl-tag size="small" variant="warning">Pending</sl-tag> status.</p>
+                            </sl-details>
 
                             <sl-button id="updateAppointment_Close" slot="footer" variant="primary">Close</sl-button>
                         </sl-dialog>
-
-                        <sl-button id="updateAppointment_Open" variant="warning" outline size="small">Update Appointment</sl-button>
+                        <sl-tooltip content="Oh... It's Update Appointment...">
+                            <sl-button id="updateAppointment_Open" variant="warning" outline size="small">Update Appointment</sl-button>
+                        </sl-tooltip>
                     </div>
                     <div class="column">
                         <sl-dialog id="deleteAppointment_Dialog" label="Delete Appointment" class="dialog-deny-close">
@@ -106,11 +126,18 @@ include PROJECT_ROOT . "/Controller/appointmentController.php";
                             <sl-input id="appointmentDelete_Confirmation" label="Date" help-text='Type "DELETE" to confirm Deletion' size="small"></sl-input>
                             <sl-divider></sl-divider>
                             <sl-button id="submitDeleteAppointment" variant="primary" outline>Submit</sl-button>
-
+                            <br>
+                            <br>
+                            <sl-details summary="Help?">
+                                <p style="font-weight: 300; font-size: 16px;"> Select <sl-tag size="small">Appointment ID</sl-tag> you want to Delete. <br> <br>
+                                <sl-icon name="exclamation-triangle" style="font-size: 16px; color: orange;"></sl-icon> Take Note that you can't Delete an Appointment that is already <sl-tag size="small" variant="primary">Working</sl-tag> or <sl-tag size="small" variant="success">Completed</sl-tag>. <br> <br>
+                                Only those are on <sl-tag size="small" variant="warning">Pending</sl-tag> and <sl-tag size="small" variant="danger">Cancelled</sl-tag> status.</p>
+                            </sl-details>
                             <sl-button id="deleteAppointment_Close" slot="footer" variant="primary">Close</sl-button>
                         </sl-dialog>
-
-                        <sl-button id="deleteAppointment_Open" variant="danger" outline size="small">Delete Appointment</sl-button>
+                        <sl-tooltip content="Oh... It's Delete Appointment...">
+                            <sl-button id="deleteAppointment_Open" variant="danger" outline size="small">Delete Appointment</sl-button>
+                        </sl-tooltip>
                     </div>
                 </div>
             </div>

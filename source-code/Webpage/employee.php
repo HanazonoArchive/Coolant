@@ -80,11 +80,19 @@ include PROJECT_ROOT . "/Controller/employeeController_Employee.php";
                             <sl-divider></sl-divider>
 
                             <sl-button id="submitEmployeeAdd" variant="primary" outline>Create</sl-button>
+                            <br>
+                            <br>
+                            <sl-details summary="Help?">
+                                <p style="font-weight: 300; font-size: 16px;"> Type in Employee <sl-tag size="small">Name</sl-tag>, <sl-tag size="small">Contact Number</sl-tag>, 
+                                <sl-tag size="small">Address</sl-tag>, <sl-tag size="small">Role</sl-tag>, and <sl-tag size="small">Pay</sl-tag> of the Employee. <br> <br>
+                                </p>
+                            </sl-details>
 
                             <sl-button id="createEmployee_Close" slot="footer" variant="primary">Close</sl-button>
                         </sl-dialog>
-
+                        <sl-tooltip content="Yes... It's Create Employee...">
                         <sl-button id="createEmployee_Open" size="small" variant="success" outline>Create</sl-button>
+                        </sl-tooltip>
                     </div>
                     <div class="column">
                         <sl-dialog id="updateEmployee_Dialog" label="Update Employee" class="dialog-deny-close">
@@ -115,11 +123,18 @@ include PROJECT_ROOT . "/Controller/employeeController_Employee.php";
                             <sl-divider></sl-divider>
 
                             <sl-button id="submitEmployeeUpdate" variant="primary" outline>Update</sl-button>
+                            <br>
+                            <br>
+                            <sl-details summary="Help?">
+                                <p style="font-weight: 300; font-size: 16px;"> Select <sl-tag size="small">Employee ID</sl-tag> you want to Update. <br> <br>
+                                <sl-icon name="exclamation-triangle" style="font-size: 16px; color: orange;"></sl-icon> Take Note that you can also Update Employee Status, and leave the rest empty.</p>
+                            </sl-details>
 
                             <sl-button id="updateEmployee_Close" slot="footer" variant="primary">Close</sl-button>
                         </sl-dialog>
-
+                        <sl-tooltip content="Oh... It's Update Employee...">
                         <sl-button id="updateEmployee_Open" size="small" variant="warning" outline>Update</sl-button>
+                        </sl-tooltip>
                     </div>
                     <div class="column">
                         <sl-dialog id="deleteEmployee_Dialog" label="Delete Employee" class="dialog-deny-close">
@@ -134,11 +149,20 @@ include PROJECT_ROOT . "/Controller/employeeController_Employee.php";
                             <sl-divider></sl-divider>
 
                             <sl-button id="submitEmployeeDelete" variant="primary" outline>Delete</sl-button>
+                            <br>
+                            <br>
+                            <sl-details summary="Help?">
+                                <p style="font-weight: 300; font-size: 16px;"> Select <sl-tag size="small">Employee ID</sl-tag> you want to Delete. <br> <br>
+                                <sl-icon name="exclamation-triangle" style="font-size: 16px; color: orange;"></sl-icon> Take Note that you can't Delete an Employee that is already on <sl-tag size="small" variant="primary">Appointment</sl-tag>. <br><br>
+                                Only those who aren't part of any <sl-tag size="small" variant="primary">Appointment</sl-tag> can be Deleted.</p>
+                            </sl-details>
 
                             <sl-button id="deleteEmployee_Close" slot="footer" variant="primary">Close</sl-button>
                         </sl-dialog>
 
+                        <sl-tooltip content="Oh... It's Delete Employee...">
                         <sl-button id="deleteEmployee_Open" size="small" variant="danger" outline>Delete</sl-button>
+                        </sl-tooltip>
                     </div>
                     <div class="column">
                         <sl-dialog id="payEmployee_Dialog" label="Pay Employee" class="dialog-deny-close">
@@ -153,11 +177,19 @@ include PROJECT_ROOT . "/Controller/employeeController_Employee.php";
                             <sl-divider></sl-divider>
 
                             <sl-button id="submitEmployeePay" variant="primary" outline>Pay</sl-button>
+                            <br>
+                            <br>
+                            <sl-details summary="Help?">
+                                <p style="font-weight: 300; font-size: 16px;"> Select <sl-tag size="small">Employee ID</sl-tag> you want to Pay. <br> <br>
+                                <sl-icon name="exclamation-triangle" style="font-size: 16px; color: orange;"></sl-icon> Take Note that only pay them based on their <sl-tag size="small" variant="primary">Total Pay</sl-tag>. </p>
+                            </sl-details>
 
                             <sl-button id="payEmployee_Close" slot="footer" variant="primary">Close</sl-button>
                         </sl-dialog>
 
+                        <sl-tooltip content="Oh... It's Paying Employee...">
                         <sl-button id="payEmployee_Open" size="small" variant="primary" outline>Pay</sl-button>
+                        </sl-tooltip>
                     </div>
                 </div>
             </div>

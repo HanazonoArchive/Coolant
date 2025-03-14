@@ -1,7 +1,7 @@
 <?php
 session_start();
-define('PROJECT_DB', $_SERVER['DOCUMENT_ROOT'] . '/CSE7PHPWebsite/public/');
-include_once PROJECT_DB . "db/DBConnection.php";
+define('PROJECT_DB', $_SERVER['DOCUMENT_ROOT'] . '/Coolant/source-code');
+include_once PROJECT_DB . "/Database/DBConnection.php";
 
 class BillingStatement
 {

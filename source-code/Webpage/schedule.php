@@ -3,6 +3,7 @@ define('PROJECT_ROOT', $_SERVER['DOCUMENT_ROOT'] . '/Coolant/source-code');
 define('BASE_URL_STYLE', '/Coolant/source-code');
 
 include PROJECT_ROOT . "/Controller/scheduleController.php";
+include PROJECT_ROOT . "/Controller/WeeklyScheduleController.php";
 ?>
 
 <!DOCTYPE html>
@@ -18,6 +19,7 @@ include PROJECT_ROOT . "/Controller/scheduleController.php";
 <body>
     <script src="<?= BASE_URL_STYLE ?>/JavaScript/schedule/scheduleFilter.js"></script>
     <script src="<?= BASE_URL_STYLE ?>/JavaScript/schedule/scheduleDetails.js"></script>
+    <script src="<?= BASE_URL_STYLE ?>/JavaScript/schedule/scheduleWeekSchedule.js"></script>
     <div class="content">
         <div class="topNavigationBar">
             <div class="topNavigationBar1" style="width: 100%; display: flex; align-items: center;">
@@ -31,7 +33,7 @@ include PROJECT_ROOT . "/Controller/scheduleController.php";
             </div>
         </div>
         <nav class="sl-theme-dark">
-            <div style="width: 100vw; display: flex; justify-content: center;">
+            <div style="width: 98vw; display: flex; justify-content: center;">
                 <div style="display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-end; 
                 border: solid var(--sl-input-border-width) var(--sl-input-border-color); width: 85%; padding: 10px;
                 border-radius: 10px;">
@@ -55,11 +57,11 @@ include PROJECT_ROOT . "/Controller/scheduleController.php";
                     </div>
                 </div>
             </div>
-            <div style="width: 100vw; display: flex; justify-content: center; margin-top: 10px;">
+            <div style="width: 100%; display: flex; justify-content: center; margin-top: 10px;">
                 <div class="scheduleTable">
                     <?= $table_content; ?>
                 </div>
-                <div style="display: flex; flex-direction: column;   justify-content: flex-start; align-items: flex-start; 
+                <div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; 
                 border: solid var(--sl-input-border-width) var(--sl-input-border-color); width: 19%; padding: 10px;
                 border-radius: 10px; margin-left: 10px;">
                     <p class="detailsHeader">Customer Information</p>
@@ -101,6 +103,103 @@ include PROJECT_ROOT . "/Controller/scheduleController.php";
                         <p class=detailsTitle>Status</p>
                         <p class="detialsContent" id="appointment_status">-</p>
                     </div>
+                </div>
+            </div>
+            <div style="width: 100%; display: flex; justify-content: center;">
+                <div style="display: flex; flex-direction: row; justify-content: flex-start; align-items: stretch; 
+                border: solid var(--sl-input-border-width) var(--sl-input-border-color); width: 85%; padding: 10px;
+                border-radius: 10px; margin-top: 10px; margin-bottom: 10px;">
+
+                    <div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch;
+                    border: solid var(--sl-input-border-width) var(--sl-input-border-color); 
+                    width: 20%; height: auto;; border-radius: 10px; margin: 5px;">
+                        <label style="padding-left: 10px; padding-top: 5px;" id="Monday">Monday</label>
+                        <div style="width: 100%;">
+                            <sl-divider style="width: 100%; --spacing: 5px;"></sl-divider>
+                        </div>
+                        <div id="scheduleDay_Monday">
+
+                        </div>
+
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch;
+                    border: solid var(--sl-input-border-width) var(--sl-input-border-color); 
+                    width: 20%; height: auto;; border-radius: 10px; margin: 5px;">
+                        <label style="padding-left: 10px; padding-top: 5px;" id="Tuesday">Tuesday</label>
+                        <div style="width: 100%;">
+                            <sl-divider style="width: 100%; --spacing: 5px;"></sl-divider>
+                        </div>
+                        <div id="scheduleDay_Tuesday">
+
+                        </div>
+
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch;
+                    border: solid var(--sl-input-border-width) var(--sl-input-border-color); 
+                    width: 20%; height: auto;; border-radius: 10px; margin: 5px;">
+                        <label style="padding-left: 10px; padding-top: 5px;" id="Wednesday">Wednesday</label>
+                        <div style="width: 100%;">
+                            <sl-divider style="width: 100%; --spacing: 5px;"></sl-divider>
+                        </div>
+                        <div id="scheduleDay_Wednesday">
+
+                        </div>
+
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch;
+                    border: solid var(--sl-input-border-width) var(--sl-input-border-color); 
+                    width: 20%; height: auto;; border-radius: 10px; margin: 5px;">
+                        <label style="padding-left: 10px; padding-top: 5px;" id="Thursday">Thursday</label>
+                        <div style="width: 100%;">
+                            <sl-divider style="width: 100%; --spacing: 5px;"></sl-divider>
+                        </div>
+                        <div id="scheduleDay_Thursday">
+
+                        </div>
+
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch;
+                    border: solid var(--sl-input-border-width) var(--sl-input-border-color); 
+                    width: 20%; height: auto;; border-radius: 10px; margin: 5px;">
+                        <label style="padding-left: 10px; padding-top: 5px;" id="Friday">Friday</label>
+                        <div style="width: 100%;">
+                            <sl-divider style="width: 100%; --spacing: 5px;"></sl-divider>
+                        </div>
+                        <div id="scheduleDay_Friday">
+
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch;
+                    border: solid var(--sl-input-border-width) var(--sl-input-border-color); 
+                    width: 20%; height: auto;; border-radius: 10px; margin: 5px;">
+                        <label style="padding-left: 10px; padding-top: 5px;" id="Saturday">Saturday</label>
+                        <div style="width: 100%;">
+                            <sl-divider style="width: 100%; --spacing: 5px;"></sl-divider>
+                        </div>
+                        <div id="scheduleDay_Saturday">
+
+                        </div>
+
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch;
+                    border: solid var(--sl-input-border-width) var(--sl-input-border-color); 
+                    width: 20%; height: auto;; border-radius: 10px; margin: 5px;">
+                        <label style="padding-left: 10px; padding-top: 5px;" id="Sunday">Sunday</label>
+                        <div style="width: 100%;">
+                            <sl-divider style="width: 100%; --spacing: 5px;"></sl-divider>
+                        </div>
+                        <div id="scheduleDay_Sunday">
+
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
         </nav>
